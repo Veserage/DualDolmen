@@ -18,6 +18,7 @@ namespace DualDolmen
     {
         public MainWindow()
         {
+            int lold = 5;
             InitializeComponent();
         }
     }

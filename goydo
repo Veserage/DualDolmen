@@ -1,0 +1,11 @@
+[33mcommit 3ab09c98dcc86e4f533b04d681ab3b7bc8923207[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32madditional[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/additional[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Veserage <mahsecondmail@yandex.ru>
+Date:   Tue Feb 25 19:50:19 2025 +0300
+
+    Добавьте файлы проекта.
+
+[33mcommit eaa7a6c56e52132628e27ec72f7d7aa260c6f189[m
+Author: Veserage <mahsecondmail@yandex.ru>
+Date:   Tue Feb 25 19:50:17 2025 +0300
+
+    Добавить .gitattributes, .gitignore и README.md.
