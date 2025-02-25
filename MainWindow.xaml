@@ -11,9 +11,8 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
+        <Button Content="Чикиряу робер)))))"></Button>
                 
-        <Border Background="Red"></Border>
         <Border Background="Blue" Grid.Column="1"></Border>
     </Grid>
 </Window>
