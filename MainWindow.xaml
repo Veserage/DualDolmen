@@ -11,7 +11,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Content="New commit LMAO"></Button>
+        <Button Content="New commit LOL"></Button>
         <Button Content="Чикиу антиробер))))"></Button>
         <Border Background="Cyan" Grid.Column="1"></Border>
     </Grid>
