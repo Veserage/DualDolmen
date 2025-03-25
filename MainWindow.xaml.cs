@@ -21,5 +21,10 @@ namespace DualDolmen
             
             InitializeComponent();
         }
+
+        private void Gleb_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Глеб, када на МАЛАДЁШКУ?", "Увага", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }
