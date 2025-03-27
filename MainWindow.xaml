@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DualDolmen"
         mc:Ignorable="d"
-        Title="DualDolmenLang" Height="450" Width="800" Icon="C:\Users\Gusev\Downloads\icofiles\palm.ico" WindowStartupLocation="CenterScreen">
+        Title="DualDolmenLang" Height="450" Width="800" Icon="\Images\palm.ico" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
