@@ -9,11 +9,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\books.png" />
+    <None Remove="Images\London.jpg" />
+    <None Remove="Images\London.png" />
     <None Remove="Images\palm.ico" />
+    <None Remove="Images\stone.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\palm.ico" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DolmenClassLibrary\DolmenClassLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\books.png" />
+    <Resource Include="Images\London.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\stone.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

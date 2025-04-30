@@ -1,0 +1,113 @@
+﻿<Page x:Class="DualDolmen.Authorization"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="600"
+      Title="Authorization">
+
+    <Page.Resources>
+        <!-- Стиль для закругленных кнопок -->
+        <Style x:Key="RoundButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#E0E2D4"/>
+            <Setter Property="Foreground" Value="#06657B"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                CornerRadius="20"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <!-- Светлый градиентный фон -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#79f39b" Offset="0"/>
+                <GradientStop Color="#6FB8B7" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <!-- Основной контент - строго 50/50 -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Левая часть - изображение (ровно половина экрана) -->
+            <Image Grid.Column="0" x:Name="MainImage"
+                   Stretch="UniformToFill"
+                   Margin="0"/>
+
+            <!-- Правая часть - форма авторизации -->
+            <Grid Grid.Column="1">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+                    <!-- Заголовок -->
+                    <TextBlock Text="Добро пожаловать в DualDolmen!"
+                               Foreground="#000000"
+                               FontSize="26"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,40"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               FontFamily="Segoe UI Semibold">
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="8" 
+                                           ShadowDepth="2" 
+                                           Opacity="0.2"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+
+                    <!-- Кнопка Вход -->
+                    <Button x:Name="LoginButton" 
+                            Content="Вход"
+                            Style="{StaticResource RoundButtonStyle}"
+                            Margin="0,0,0,20"
+                            Click="LoginButton_Click" Height="40">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="10" 
+                                            ShadowDepth="4" 
+                                            Opacity="0.2"/>
+                        </Button.Effect>
+                    </Button>
+
+                    <!-- Кнопка Регистрация -->
+                    <Button x:Name="RegisterButton"
+                            Content="Регистрация"
+                            Style="{StaticResource RoundButtonStyle}"
+                            Background="#06657B"
+                            Foreground="#FFFFFF"
+                            Click="RegisterButton_Click" Height="40">
+                        <Button.Effect>
+                            <DropShadowEffect BlurRadius="10" 
+                                            ShadowDepth="4" 
+                                            Opacity="0.2"/>
+                        </Button.Effect>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DualDolmen"
         mc:Ignorable="d"
-        Title="DualDolmenLang" Height="450" Width="800" Icon="\Images\palm.ico" WindowStartupLocation="CenterScreen">
+        Title="DualDolmen" Height="400" Width="600"
+        Icon="\Images\stone.ico" 
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Button Content="А, НЮ ДОВАЙ, НАЖМИ НА МЕНЯ, МАСЛЁНОК" Click="Gleb_Click" FontFamily="Arial" FontSize="20" FontWeight="Bold"></Button>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
