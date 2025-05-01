@@ -31,12 +31,16 @@ namespace DualDolmen
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Завтра продолжим!");
+            MessageBox.Show("Хз пока, чо тут делать!");
         }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("А пока спать!");
+            Reg registrationPage = new Reg();
+            NavigationService navigationService = NavigationService.GetNavigationService(this);
+
+            if (navigationService != null) { navigationService.Navigate(registrationPage); }
+            else { this.NavigationService?.Navigate(registrationPage); }
         }
     }
 }
