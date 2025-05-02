@@ -5,8 +5,6 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DualDolmen", "DualDolmen.csproj", "{26407B2B-D682-4497-9A45-A65076955ECF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DolmenClassLibrary", "..\DolmenClassLibrary\DolmenClassLibrary.csproj", "{4F1C8721-DFC7-4E3B-BF54-5E8FBEF3214D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{26407B2B-D682-4497-9A45-A65076955ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26407B2B-D682-4497-9A45-A65076955ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26407B2B-D682-4497-9A45-A65076955ECF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F1C8721-DFC7-4E3B-BF54-5E8FBEF3214D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F1C8721-DFC7-4E3B-BF54-5E8FBEF3214D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F1C8721-DFC7-4E3B-BF54-5E8FBEF3214D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F1C8721-DFC7-4E3B-BF54-5E8FBEF3214D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

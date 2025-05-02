@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DolmenClassLibrary\DolmenClassLibrary.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Images\books.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
