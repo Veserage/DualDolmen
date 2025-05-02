@@ -2,12 +2,13 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using System.Windows.Media.Animation;
 
 namespace DualDolmen
 {
     public partial class Reg : Page
     {
+        private bool _isBackNavigationInProgress = false; // Флаг для блокировки множественных нажатий
         public Reg()
         {
             InitializeComponent();
@@ -17,12 +18,10 @@ namespace DualDolmen
 
         private void InitializePlaceholders()
         {
-            // Устанавливаем Tag для всех полей
             LoginTextBox.Tag = "Введите логин";
             PasswordBox.Tag = "Введите пароль";
             RepeatPasswordBox.Tag = "Повторите пароль";
 
-            // Инициализируем плейсхолдеры
             UpdateLoginPlaceholder();
             UpdatePasswordPlaceholder();
             UpdateRepeatPasswordPlaceholder();
@@ -36,56 +35,29 @@ namespace DualDolmen
 
         private void UpdatePasswordPlaceholder()
         {
-            if (string.IsNullOrEmpty(PasswordBox.Password))
-            {
-                PasswordPlaceholder.Visibility = Visibility.Visible;
-                PasswordBox.PasswordChar = '\0'; // Показываем текст плейсхолдера
-                PasswordBox.Foreground = Brushes.Gray;
-            }
-            else
-            {
-                PasswordPlaceholder.Visibility = Visibility.Hidden;
-                PasswordBox.PasswordChar = '•'; // Включаем символы пароля
-                PasswordBox.Foreground = Brushes.Black;
-            }
+            PasswordPlaceholder.Visibility = string.IsNullOrEmpty(PasswordBox.Password) ?
+                Visibility.Visible : Visibility.Hidden;
+
+            // Всегда показывать звездочки, если есть текст
+            PasswordBox.PasswordChar = string.IsNullOrEmpty(PasswordBox.Password) ? '\0' : '•';
+            PasswordBox.Foreground = Brushes.Black;
         }
 
         private void UpdateRepeatPasswordPlaceholder()
         {
-            if (string.IsNullOrEmpty(RepeatPasswordBox.Password))
-            {
-                RepeatPasswordPlaceholder.Visibility = Visibility.Visible;
-                RepeatPasswordBox.PasswordChar = '\0';
-                RepeatPasswordBox.Foreground = Brushes.Gray;
-            }
-            else
-            {
-                RepeatPasswordPlaceholder.Visibility = Visibility.Hidden;
-                RepeatPasswordBox.PasswordChar = '•';
-                RepeatPasswordBox.Foreground = Brushes.Black;
-            }
+            RepeatPasswordPlaceholder.Visibility = string.IsNullOrEmpty(RepeatPasswordBox.Password) ?
+                Visibility.Visible : Visibility.Hidden;
+
+            RepeatPasswordBox.PasswordChar = string.IsNullOrEmpty(RepeatPasswordBox.Password) ? '\0' : '•';
+            RepeatPasswordBox.Foreground = Brushes.Black;
         }
 
         private void Page_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            // Проверяем, было ли нажатие вне элементов управления
+            // Убираем фокус с текущего элемента, если клик вне полей ввода
             if (!(e.OriginalSource is TextBox) && !(e.OriginalSource is PasswordBox))
             {
-                // Восстанавливаем плейсхолдеры, если поля пустые
-                if (string.IsNullOrWhiteSpace(LoginTextBox.Text))
-                {
-                    UpdateLoginPlaceholder();
-                }
-
-                if (string.IsNullOrWhiteSpace(PasswordBox.Password))
-                {
-                    UpdatePasswordPlaceholder();
-                }
-
-                if (string.IsNullOrWhiteSpace(RepeatPasswordBox.Password))
-                {
-                    UpdateRepeatPasswordPlaceholder();
-                }
+                Keyboard.ClearFocus();
             }
         }
 
@@ -102,7 +74,7 @@ namespace DualDolmen
         private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
         {
             PasswordPlaceholder.Visibility = Visibility.Hidden;
-            PasswordBox.PasswordChar = '•'; // Включаем символы пароля при фокусе
+            PasswordBox.PasswordChar = '•';
             PasswordBox.Foreground = Brushes.Black;
         }
 
@@ -158,17 +130,89 @@ namespace DualDolmen
 
         private void BackText_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            NavigationService?.GoBack();
+            // Если навигация уже выполняется - игнорируем новое нажатие
+            if (_isBackNavigationInProgress || NavigationService == null)
+                return;
+
+            _isBackNavigationInProgress = true;
+
+            // Создаем новую страницу авторизации
+            var authorizationPage = new Authorization();
+
+            // Настраиваем анимацию исчезновения текущей страницы
+            var exitStoryboard = new Storyboard();
+
+            // Анимация сдвига вправо
+            var slideOutAnimation = new DoubleAnimation
+            {
+                From = 0,
+                To = this.ActualWidth,
+                Duration = TimeSpan.FromSeconds(0.3),
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseIn }
+            };
+            Storyboard.SetTargetProperty(slideOutAnimation, new PropertyPath("RenderTransform.X"));
+
+            // Анимация исчезновения
+            var fadeOutAnimation = new DoubleAnimation
+            {
+                From = 1.0,
+                To = 0.0,
+                Duration = TimeSpan.FromSeconds(0.25)
+            };
+            Storyboard.SetTargetProperty(fadeOutAnimation, new PropertyPath("Opacity"));
+
+            exitStoryboard.Children.Add(slideOutAnimation);
+            exitStoryboard.Children.Add(fadeOutAnimation);
+
+            // Инициализируем трансформацию
+            this.RenderTransform = new TranslateTransform();
+
+            // Настраиваем анимацию появления новой страницы
+            authorizationPage.RenderTransform = new TranslateTransform { X = -authorizationPage.ActualWidth };
+            authorizationPage.Opacity = 0;
+
+            // Обработчик завершения анимации исчезновения
+            exitStoryboard.Completed += (s, args) =>
+            {
+                // Выполняем навигацию
+                NavigationService.Navigate(authorizationPage);
+
+                // Анимация появления новой страницы
+                var enterStoryboard = new Storyboard();
+
+                var slideInAnimation = new DoubleAnimation
+                {
+                    From = -authorizationPage.ActualWidth,
+                    To = 0,
+                    Duration = TimeSpan.FromSeconds(0.3),
+                    EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+                };
+                Storyboard.SetTargetProperty(slideInAnimation, new PropertyPath("RenderTransform.X"));
+
+                var fadeInAnimation = new DoubleAnimation
+                {
+                    From = 0,
+                    To = 1,
+                    Duration = TimeSpan.FromSeconds(0.2)
+                };
+                Storyboard.SetTargetProperty(fadeInAnimation, new PropertyPath("Opacity"));
+
+                enterStoryboard.Children.Add(slideInAnimation);
+                enterStoryboard.Children.Add(fadeInAnimation);
+                enterStoryboard.Begin(authorizationPage);
+
+                _isBackNavigationInProgress = false; // Сбрасываем флаг после завершения
+            };
+
+            // Запускаем анимацию исчезновения
+            exitStoryboard.Begin(this);
         }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            // Проверка заполнения полей (исключаем плейсхолдеры)
-            bool isLoginEmpty = string.IsNullOrWhiteSpace(LoginTextBox.Text) || LoginTextBox.Text == (string)LoginTextBox.Tag;
-            bool isPasswordEmpty = string.IsNullOrWhiteSpace(PasswordBox.Password) || PasswordBox.Password == (string)PasswordBox.Tag;
-            bool isRepeatPasswordEmpty = string.IsNullOrWhiteSpace(RepeatPasswordBox.Password) || RepeatPasswordBox.Password == (string)RepeatPasswordBox.Tag;
-
-            if (isLoginEmpty || isPasswordEmpty || isRepeatPasswordEmpty)
+            if (string.IsNullOrWhiteSpace(LoginTextBox.Text) ||
+                string.IsNullOrWhiteSpace(PasswordBox.Password) ||
+                string.IsNullOrWhiteSpace(RepeatPasswordBox.Password))
             {
                 MessageBox.Show("Заполните все поля!");
                 return;
@@ -180,7 +224,6 @@ namespace DualDolmen
                 return;
             }
 
-            // Логика регистрации
             MessageBox.Show("Регистрация успешна!");
         }
     }

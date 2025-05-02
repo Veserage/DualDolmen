@@ -8,7 +8,170 @@
       d:DesignHeight="450" d:DesignWidth="700"
       Title="Enter">
 
+    <Page.Resources>
+        <!-- Стиль для TextBox -->
+        <Style x:Key="PlaceholderTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="#E0E2D4"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="15,12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для PasswordBox -->
+        <Style x:Key="PlaceholderPasswordBoxStyle" TargetType="PasswordBox">
+            <Setter Property="Background" Value="#E0E2D4"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="15,12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для кнопки -->
+        <Style x:Key="RoundButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#06657B"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="15,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                CornerRadius="25"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для плейсхолдера -->
+        <Style x:Key="PlaceholderTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FF999999"/>
+            <Setter Property="Margin" Value="20,0,0,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="IsHitTestVisible" Value="False"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </Page.Resources>
+
     <Grid>
-        
+        <!-- Светлый градиентный фон -->
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#79f39b" Offset="0"/>
+                <GradientStop Color="#6FB8B7" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <!-- Основной контейнер с Viewbox для масштабирования -->
+        <Viewbox Stretch="Uniform">
+            <Grid Width="700" Height="450">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Левая часть - форма авторизации -->
+                <StackPanel 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"
+                           Width="470" Height="430">
+
+                    <TextBlock Text="← Назад"
+                        Margin="-25,-10,0,30"
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Foreground="#000000"
+                        Cursor="Hand"
+                        HorizontalAlignment="Left"
+                        MouseDown="BackText_MouseDown" Width="80">
+                        <TextBlock.Effect>
+                            <DropShadowEffect BlurRadius="4" ShadowDepth="2" Opacity="0.1"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+
+                    <!-- Заголовок -->
+                    <TextBlock Text="Вход в систему"
+                               Margin="-10,30,0,30"
+                               FontSize="32"
+                               FontWeight="Bold"
+                               Foreground="#000000" Width="426"/>
+
+                    <!-- Поле для логина -->
+                    <Grid Margin="-10,0,0,20" Height="50">
+                        <TextBox x:Name="LoginTextBox" 
+                                 Style="{StaticResource PlaceholderTextBoxStyle}"
+                                 GotFocus="LoginTextBox_GotFocus"
+                                 LostFocus="LoginTextBox_LostFocus"/>
+                        <TextBlock x:Name="LoginPlaceholder" 
+                                   Text="Введите логин"
+                                   FontSize="20"
+                                   Style="{StaticResource PlaceholderTextStyle}"/>
+                    </Grid>
+
+                    <!-- Поле для пароля -->
+                    <Grid Margin="-10,0,0,30" Height="50">
+                        <PasswordBox x:Name="PasswordBox" 
+                                     Style="{StaticResource PlaceholderPasswordBoxStyle}"
+                                     GotFocus="PasswordBox_GotFocus"
+                                     LostFocus="PasswordBox_LostFocus"/>
+                        <TextBlock x:Name="PasswordPlaceholder" 
+                                   Text="Введите пароль"
+                                   FontSize="20"
+                                   Style="{StaticResource PlaceholderTextStyle}"/>
+                    </Grid>
+
+                    <!-- Кнопка входа -->
+                    <Button Content="Войти"
+                            Style="{StaticResource RoundButtonStyle}"
+                            Height="60"
+                            FontSize="20"
+                            Margin="0,10,0,20"
+                            Click="LoginButton_Click" Width="380"/>
+                </StackPanel>
+
+                <!-- Правая часть - изображение -->
+                <Image Grid.Column="1" 
+                       Source="/Images/books.png"
+                       Stretch="UniformToFill" Margin="0,0,-100,0"/>
+            </Grid>
+        </Viewbox>
     </Grid>
 </Page>
