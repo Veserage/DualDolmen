@@ -20,13 +20,6 @@ namespace DualDolmen
         public Authorization()
         {
             InitializeComponent();
-            LoadImage();
-        }
-
-        private void LoadImage()
-        {
-            var uri = new Uri("/Images/London.jpg", UriKind.Relative);
-            MainImage.Source = new BitmapImage(uri);
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)

@@ -17,12 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DolmenClassLibrary\DolmenClassLibrary.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Images\books.png" />
-    <Resource Include="Images\London.jpg">
+    <Resource Include="Images\books.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\London.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\stone.ico">

@@ -194,6 +194,7 @@
         <!-- Правая часть (25%) - изображение -->
         <Image Grid.Column="1" 
                x:Name="RightImage"
-               Stretch="UniformToFill"/>
+               Stretch="UniformToFill"
+               Source="/Images/books.png"/>
     </Grid>
 </Page>

@@ -8,7 +8,7 @@
         Title="DualDolmen" Height="450" Width="700"
         Icon="\Images\stone.ico" 
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize">
+        ResizeMode="CanResize">
     <Grid>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>

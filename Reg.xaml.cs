@@ -11,15 +11,8 @@ namespace DualDolmen
         public Reg()
         {
             InitializeComponent();
-            LoadImage();
             InitializePlaceholders();
             this.PreviewMouseDown += Page_PreviewMouseDown;
-        }
-
-        private void LoadImage()
-        {
-            var uri = new Uri("/Images/books.png", UriKind.Relative);
-            RightImage.Source = new BitmapImage(uri);
         }
 
         private void InitializePlaceholders()
