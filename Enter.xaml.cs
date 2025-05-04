@@ -19,6 +19,7 @@ namespace DualDolmen
             InitializeComponent();
             LoadUsers();
         }
+        // TODO: заебошить enter
 
         private void LoadUsers()
         {

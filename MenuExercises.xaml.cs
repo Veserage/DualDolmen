@@ -38,7 +38,8 @@ namespace DualDolmen
             ContentBorder.Child = GetLogoutConfirmationPanel();
         }
 
-        private UIElement GetAccountPanel() // Мой аккаунт
+        // Мой аккаунт
+        private UIElement GetAccountPanel() 
         {
             var panel = new StackPanel();
             panel.Children.Add(new TextBlock { Text = $"{ CurrentUsername }", Style = (Style)FindResource("HeaderTextStyle") });
@@ -49,7 +50,8 @@ namespace DualDolmen
             return panel;
         }
 
-        private UIElement GetExercisesPanel() // Упражнения
+        // Упражнения
+        private UIElement GetExercisesPanel() 
         {
             var scrollViewer = new ScrollViewer
             {
@@ -71,73 +73,73 @@ namespace DualDolmen
             var categoryButtonStyle = new Style(typeof(Button))
             {
                 Setters =
-        {
-            new Setter(Button.BackgroundProperty, new SolidColorBrush(categoryColor)),
-            new Setter(Button.ForegroundProperty, Brushes.White),
-            new Setter(Button.FontSizeProperty, 20.0), // Увеличенный шрифт
-            new Setter(Button.FontWeightProperty, FontWeights.Bold), // Более жирный
-            new Setter(Button.BorderThicknessProperty, new Thickness(0)),
-            new Setter(Button.PaddingProperty, new Thickness(20, 15, 20, 15)), // Больше отступы
-            new Setter(Button.MarginProperty, new Thickness(0, 8, 0, 0)), // Больше отступ сверху
-            new Setter(Button.HorizontalContentAlignmentProperty, HorizontalAlignment.Left),
-            new Setter(Button.MinHeightProperty, 60.0) // Минимальная высота
-        },
+                    {
+                        new Setter(Button.BackgroundProperty, new SolidColorBrush(categoryColor)),
+                        new Setter(Button.ForegroundProperty, Brushes.White),
+                        new Setter(Button.FontSizeProperty, 20.0), // Увеличенный шрифт
+                        new Setter(Button.FontWeightProperty, FontWeights.Bold), // Более жирный
+                        new Setter(Button.BorderThicknessProperty, new Thickness(0)),
+                        new Setter(Button.PaddingProperty, new Thickness(20, 15, 20, 15)), // Больше отступы
+                        new Setter(Button.MarginProperty, new Thickness(0, 8, 0, 0)), // Больше отступ сверху
+                        new Setter(Button.HorizontalContentAlignmentProperty, HorizontalAlignment.Left),
+                        new Setter(Button.MinHeightProperty, 60.0) // Минимальная высота
+                    },
                 Triggers =
-        {
-            new Trigger
-            {
-                Property = Button.IsMouseOverProperty,
-                Value = true,
-                Setters =
-                {
-                    new Setter(Button.BackgroundProperty, new SolidColorBrush(categoryHoverColor)),
-                    new Setter(Button.CursorProperty, Cursors.Hand),
-                    new Setter(Button.ForegroundProperty, Brushes.Black)
-                }
-            }
-        }
+                    {
+                        new Trigger
+                        {
+                            Property = Button.IsMouseOverProperty,
+                            Value = true,
+                            Setters =
+                            {
+                                new Setter(Button.BackgroundProperty, new SolidColorBrush(categoryHoverColor)),
+                                new Setter(Button.CursorProperty, Cursors.Hand),
+                                new Setter(Button.ForegroundProperty, Brushes.Black)
+                            }
+                        }
+                    }
             };
 
             // Стиль для кнопок уровней (увеличенные размеры)
             var levelButtonStyle = new Style(typeof(Button))
             {
                 Setters =
-        {
-            new Setter(Button.BackgroundProperty, new SolidColorBrush(levelColor)),
-            new Setter(Button.ForegroundProperty, Brushes.White),
-            new Setter(Button.FontSizeProperty, 18.0), // Увеличенный шрифт
-            new Setter(Button.FontWeightProperty, FontWeights.SemiBold),
-            new Setter(Button.BorderThicknessProperty, new Thickness(0)),
-            new Setter(Button.PaddingProperty, new Thickness(20, 12, 20, 12)), // Больше отступы
-            new Setter(Button.MarginProperty, new Thickness(0, 5, 0, 5)), // Больше отступы
-            new Setter(Button.HorizontalContentAlignmentProperty, HorizontalAlignment.Left),
-            new Setter(Button.MinHeightProperty, 50.0) // Минимальная высота
-        },
+                    {
+                        new Setter(Button.BackgroundProperty, new SolidColorBrush(levelColor)),
+                        new Setter(Button.ForegroundProperty, Brushes.White),
+                        new Setter(Button.FontSizeProperty, 18.0), // Увеличенный шрифт
+                        new Setter(Button.FontWeightProperty, FontWeights.SemiBold),
+                        new Setter(Button.BorderThicknessProperty, new Thickness(0)),
+                        new Setter(Button.PaddingProperty, new Thickness(20, 12, 20, 12)), // Больше отступы
+                        new Setter(Button.MarginProperty, new Thickness(0, 5, 0, 5)), // Больше отступы
+                        new Setter(Button.HorizontalContentAlignmentProperty, HorizontalAlignment.Left),
+                        new Setter(Button.MinHeightProperty, 50.0) // Минимальная высота
+                    },
                 Triggers =
-        {
-            new Trigger
-            {
-                Property = Button.IsMouseOverProperty,
-                Value = true,
-                Setters =
-                {
-                    new Setter(Button.BackgroundProperty, new SolidColorBrush(levelHoverColor)),
-                    new Setter(Button.CursorProperty, Cursors.Hand),
-                    new Setter(Button.ForegroundProperty, Brushes.Black)
-                }
-            }
-        }
+                    {
+                        new Trigger
+                        {
+                            Property = Button.IsMouseOverProperty,
+                            Value = true,
+                            Setters =
+                            {
+                                new Setter(Button.BackgroundProperty, new SolidColorBrush(levelHoverColor)),
+                                new Setter(Button.CursorProperty, Cursors.Hand),
+                                new Setter(Button.ForegroundProperty, Brushes.Black)
+                            }
+                        }
+                    }
             };
 
             // Словарь категорий и их уровней
             var categories = new Dictionary<string, List<string>>
-    {
-        { "Общение", new List<string> { "Приветствие и прощание", "Знакомство", "Поздравление", "Обращение к человеку", "Встреча" } },
-        { "Городская черта", new List<string> { "Почта, телеграф", "Транспорт", "Внука", "В бассейне", "Развлечения" } },
-        { "Путешествия", new List<string> { "На самолёте", "На поезде", "На теплоходе", "На автобусе", "В такси" } },
-        { "Магазин, покупки", new List<string> { "В супермаркете", "На рынке", "Фрукты", "Овощи", "Ягоды" } },
-        { "Прибытие и отбытие", new List<string> { "Паспортный контроль", "Таможня", "На вокзале", "В аэропорту", "В отеле" } }
-    };
+            {
+                { "Общение", new List<string> { "Приветствие и прощание", "Знакомство", "Поздравление", "Обращение к человеку", "Встреча" } },
+                { "Городская черта", new List<string> { "Почта, телеграф", "Транспорт", "Внука", "В бассейне", "Развлечения" } },
+                { "Путешествия", new List<string> { "На самолёте", "На поезде", "На теплоходе", "На автобусе", "В такси" } },
+                { "Магазин, покупки", new List<string> { "В супермаркете", "На рынке", "Фрукты", "Овощи", "Ягоды" } },
+                { "Прибытие и отбытие", new List<string> { "Паспортный контроль", "Таможня", "На вокзале", "В аэропорту", "В отеле" } }
+            };
 
             foreach (var category in categories)
             {
@@ -190,7 +192,8 @@ namespace DualDolmen
             return scrollViewer;
         }
 
-        private UIElement GetLearnedWordsPanel() // Изученные слова
+        // Изученные слова
+        private UIElement GetLearnedWordsPanel() 
         {
             var panel = new StackPanel { Margin = new Thickness(0, -10, 0, 0) };
 
@@ -208,7 +211,7 @@ namespace DualDolmen
                     TextDecorations = TextDecorations.Underline,
                     Cursor = System.Windows.Input.Cursors.Hand // Курсор в виде руки при наведении
                 };
-
+                
                 // Добавляем тень
                 textBlock.Effect = new DropShadowEffect
                 {
@@ -231,7 +234,8 @@ namespace DualDolmen
             return panel;
         }
 
-        private UIElement GetLogoutConfirmationPanel() // Выход из аккаунта
+        // Выход из аккаунта
+        private UIElement GetLogoutConfirmationPanel() 
         {
             var panel = new StackPanel
             {
@@ -317,7 +321,8 @@ namespace DualDolmen
             return panel;
         }
 
-        private async void DeleteLabel_MouseDown(object sender, MouseButtonEventArgs e) // Удаление пользователя
+        // Удаление пользователя
+        private async void DeleteLabel_MouseDown(object sender, MouseButtonEventArgs e) 
         {
             if (string.IsNullOrEmpty(CurrentUsername))
             {

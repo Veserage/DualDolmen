@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DualDolmen"
         mc:Ignorable="d"
-        Title="DualDolmen" Height="450" Width="700"
+        Title="DualDolmen" Height="650" Width="1000"
         Icon="\Images\stone.ico" 
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize">
+        ResizeMode="CanMinimize"
+        Background="#6fb8b7">
     <Grid>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>

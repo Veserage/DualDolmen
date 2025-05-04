@@ -116,7 +116,7 @@
 
                     <!-- Кнопка "Назад" -->
                     <TextBlock Text="← Назад"
-                               Margin="-25,-10,0,30"
+                               Margin="5,5,0,30"
                                FontSize="18"
                                FontWeight="SemiBold"
                                Foreground="#000000"
@@ -136,7 +136,7 @@
                                Foreground="#000000" Width="426"/>
 
                     <!-- Поле для логина -->
-                    <Grid Margin="-10,0,0,20" Height="50">
+                    <Grid Margin="0,0,0,20" Height="50">
                         <TextBox x:Name="LoginTextBox" 
                                  Style="{StaticResource PlaceholderTextBoxStyle}"
                                  GotFocus="LoginTextBox_GotFocus"
@@ -148,7 +148,7 @@
                     </Grid>
 
                     <!-- Поле для пароля -->
-                    <Grid Margin="-10,0,0,20" Height="50">
+                    <Grid Margin="0,0,0,20" Height="50">
                         <PasswordBox x:Name="PasswordBox" 
                                      Style="{StaticResource PlaceholderPasswordBoxStyle}"
                                      GotFocus="PasswordBox_GotFocus"
@@ -160,7 +160,7 @@
                     </Grid>
 
                     <!-- Поле для повторного ввода пароля -->
-                    <Grid Margin="-10,0,0,10" Height="50">
+                    <Grid Margin="0,0,0,10" Height="50">
                         <PasswordBox x:Name="RepeatPasswordBox" 
                                      Style="{StaticResource PlaceholderPasswordBoxStyle}"
                                      GotFocus="RepeatPasswordBox_GotFocus"
@@ -193,6 +193,7 @@
                 <Image Grid.Column="1" 
                        Source="/Images/books.png"
                        Stretch="UniformToFill" Margin="0,0,-100,0"/>
+                
             </Grid>
         </Viewbox>
     </Grid>

@@ -88,6 +88,7 @@
                                 Content="Вход"
                                 Style="{StaticResource RoundButtonStyle}"
                                 Margin="20,-20,0,20"
+                                Cursor="Hand"
                                 Click="LoginButton_Click" Height="45" Width="250">
                             <Button.Effect>
                                 <DropShadowEffect BlurRadius="10" ShadowDepth="4" Opacity="0.2"/>
@@ -101,6 +102,7 @@
                                 Background="#06657B"
                                 Foreground="#FFFFFF"
                                 Margin="20,0,0,20"
+                                Cursor="Hand"
                                 Click="RegisterButton_Click" Height="45" Width="250">
                             <Button.Effect>
                                 <DropShadowEffect BlurRadius="10" ShadowDepth="4" Opacity="0.2"/>

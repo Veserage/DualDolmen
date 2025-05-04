@@ -23,6 +23,7 @@ namespace DualDolmen
 
             _usersApp = new UsersApp(usersFilePath);
         }
+        // TODO: заебошить enter
 
         private void BackText_MouseDown(object sender, MouseButtonEventArgs e)
         {
