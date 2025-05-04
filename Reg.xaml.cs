@@ -1,148 +1,39 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace DualDolmen
 {
     public partial class Reg : Page
     {
-        private bool _isBackNavigationInProgress = false; // Флаг для блокировки множественных нажатий
+        private readonly UsersApp _usersApp;
+        private bool _isNavigationInProgress = false;
+
         public Reg()
         {
             InitializeComponent();
-            InitializePlaceholders();
-            this.PreviewMouseDown += Page_PreviewMouseDown;
-        }
 
-        private void InitializePlaceholders()
-        {
-            LoginTextBox.Tag = "Введите логин";
-            PasswordBox.Tag = "Введите пароль";
-            RepeatPasswordBox.Tag = "Повторите пароль";
+            // Путь к файлу users.json в папке bin
+            string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string usersFilePath = Path.Combine(appDirectory, "users.json");
 
-            UpdateLoginPlaceholder();
-            UpdatePasswordPlaceholder();
-            UpdateRepeatPasswordPlaceholder();
-        }
-
-        private void UpdateLoginPlaceholder()
-        {
-            LoginPlaceholder.Visibility = string.IsNullOrEmpty(LoginTextBox.Text) ?
-                Visibility.Visible : Visibility.Hidden;
-        }
-
-        private void UpdatePasswordPlaceholder()
-        {
-            PasswordPlaceholder.Visibility = string.IsNullOrEmpty(PasswordBox.Password) ?
-                Visibility.Visible : Visibility.Hidden;
-
-            // Всегда показывать звездочки, если есть текст
-            PasswordBox.PasswordChar = string.IsNullOrEmpty(PasswordBox.Password) ? '\0' : '•';
-            PasswordBox.Foreground = Brushes.Black;
-        }
-
-        private void UpdateRepeatPasswordPlaceholder()
-        {
-            RepeatPasswordPlaceholder.Visibility = string.IsNullOrEmpty(RepeatPasswordBox.Password) ?
-                Visibility.Visible : Visibility.Hidden;
-
-            RepeatPasswordBox.PasswordChar = string.IsNullOrEmpty(RepeatPasswordBox.Password) ? '\0' : '•';
-            RepeatPasswordBox.Foreground = Brushes.Black;
-        }
-
-        private void Page_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            // Убираем фокус с текущего элемента, если клик вне полей ввода
-            if (!(e.OriginalSource is TextBox) && !(e.OriginalSource is PasswordBox))
-            {
-                Keyboard.ClearFocus();
-            }
-        }
-
-        private void LoginTextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            LoginPlaceholder.Visibility = Visibility.Hidden;
-        }
-
-        private void LoginTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            UpdateLoginPlaceholder();
-        }
-
-        private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            PasswordPlaceholder.Visibility = Visibility.Hidden;
-            PasswordBox.PasswordChar = '•';
-            PasswordBox.Foreground = Brushes.Black;
-        }
-
-        private void PasswordBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            UpdatePasswordPlaceholder();
-        }
-
-        private void RepeatPasswordBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            RepeatPasswordPlaceholder.Visibility = Visibility.Hidden;
-            RepeatPasswordBox.PasswordChar = '•';
-            RepeatPasswordBox.Foreground = Brushes.Black;
-        }
-
-        private void RepeatPasswordBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            UpdateRepeatPasswordPlaceholder();
-        }
-
-        private void LoginTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateLoginPlaceholder();
-        }
-
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            UpdatePasswordPlaceholder();
-        }
-
-        private void RepeatPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            UpdateRepeatPasswordPlaceholder();
-        }
-
-        private void TextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                RegisterButton_Click(sender, e);
-                e.Handled = true;
-            }
-        }
-
-        private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                RegisterButton_Click(sender, e);
-                e.Handled = true;
-            }
+            _usersApp = new UsersApp(usersFilePath);
         }
 
         private void BackText_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            // Если навигация уже выполняется - игнорируем новое нажатие
-            if (_isBackNavigationInProgress || NavigationService == null)
+            if (_isNavigationInProgress || NavigationService == null)
                 return;
 
-            _isBackNavigationInProgress = true;
+            _isNavigationInProgress = true;
 
-            // Создаем новую страницу авторизации
-            var authorizationPage = new Authorization();
-
-            // Настраиваем анимацию исчезновения текущей страницы
+            // Анимация исчезновения текущей страницы
             var exitStoryboard = new Storyboard();
 
-            // Анимация сдвига вправо
             var slideOutAnimation = new DoubleAnimation
             {
                 From = 0,
@@ -152,11 +43,10 @@ namespace DualDolmen
             };
             Storyboard.SetTargetProperty(slideOutAnimation, new PropertyPath("RenderTransform.X"));
 
-            // Анимация исчезновения
             var fadeOutAnimation = new DoubleAnimation
             {
-                From = 1.0,
-                To = 0.0,
+                From = 1,
+                To = 0,
                 Duration = TimeSpan.FromSeconds(0.25)
             };
             Storyboard.SetTargetProperty(fadeOutAnimation, new PropertyPath("Opacity"));
@@ -164,25 +54,26 @@ namespace DualDolmen
             exitStoryboard.Children.Add(slideOutAnimation);
             exitStoryboard.Children.Add(fadeOutAnimation);
 
-            // Инициализируем трансформацию
             this.RenderTransform = new TranslateTransform();
 
-            // Настраиваем анимацию появления новой страницы
-            authorizationPage.RenderTransform = new TranslateTransform { X = -authorizationPage.ActualWidth };
-            authorizationPage.Opacity = 0;
-
-            // Обработчик завершения анимации исчезновения
-            exitStoryboard.Completed += (s, args) =>
+            exitStoryboard.Completed += (s, _) =>
             {
+                // Создаем страницу авторизации
+                var authPage = new Authorization();
+
+                // Настраиваем анимацию появления
+                authPage.RenderTransform = new TranslateTransform { X = -authPage.ActualWidth };
+                authPage.Opacity = 0;
+
                 // Выполняем навигацию
-                NavigationService.Navigate(authorizationPage);
+                NavigationService.Navigate(authPage);
 
                 // Анимация появления новой страницы
                 var enterStoryboard = new Storyboard();
 
                 var slideInAnimation = new DoubleAnimation
                 {
-                    From = -authorizationPage.ActualWidth,
+                    From = -authPage.ActualWidth,
                     To = 0,
                     Duration = TimeSpan.FromSeconds(0.3),
                     EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
@@ -199,32 +90,131 @@ namespace DualDolmen
 
                 enterStoryboard.Children.Add(slideInAnimation);
                 enterStoryboard.Children.Add(fadeInAnimation);
-                enterStoryboard.Begin(authorizationPage);
+                enterStoryboard.Begin(authPage);
 
-                _isBackNavigationInProgress = false; // Сбрасываем флаг после завершения
+                _isNavigationInProgress = false;
             };
 
-            // Запускаем анимацию исчезновения
             exitStoryboard.Begin(this);
         }
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        private void LoginTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(LoginTextBox.Text) ||
-                string.IsNullOrWhiteSpace(PasswordBox.Password) ||
-                string.IsNullOrWhiteSpace(RepeatPasswordBox.Password))
-            {
-                MessageBox.Show("Заполните все поля!");
-                return;
-            }
+            LoginPlaceholder.Visibility = Visibility.Collapsed;
+        }
 
-            if (PasswordBox.Password != RepeatPasswordBox.Password)
-            {
-                MessageBox.Show("Пароли не совпадают!");
-                return;
-            }
+        private void LoginTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(LoginTextBox.Text))
+                LoginPlaceholder.Visibility = Visibility.Visible;
+        }
 
-            MessageBox.Show("Регистрация успешна!");
+        private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            PasswordPlaceholder.Visibility = Visibility.Collapsed;
+        }
+
+        private void PasswordBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(PasswordBox.Password))
+                PasswordPlaceholder.Visibility = Visibility.Visible;
+        }
+
+        private void RepeatPasswordBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            RepeatPasswordPlaceholder.Visibility = Visibility.Collapsed;
+        }
+
+        private void RepeatPasswordBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(RepeatPasswordBox.Password))
+                RepeatPasswordPlaceholder.Visibility = Visibility.Visible;
+        }
+
+        private async void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            string login = LoginTextBox.Text;
+            string password = PasswordBox.Password;
+            string repeatPassword = RepeatPasswordBox.Password;
+
+            try
+            {
+                // Проверка на пустые поля
+                if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(repeatPassword))
+                {
+                    ShowErrorMessage("Все поля должны быть заполнены!");
+                    return;
+                }
+
+                // Проверка совпадения паролей
+                if (password != repeatPassword)
+                {
+                    ShowErrorMessage("Пароли не совпадают!");
+                    return;
+                }
+
+                // Вызов метода регистрации
+                _usersApp.RegisterUser(login, password, repeatPassword);
+
+                // Анимация перехода
+                await AnimateTransitionToMenuExercises(login);
+            }
+            catch (ArgumentException ex)
+            {
+                ShowErrorMessage(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ShowErrorMessage(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                ShowErrorMessage($"Произошла ошибка: {ex.Message}");
+            }
+        }
+
+        private async Task AnimateTransitionToMenuExercises(string username)
+        {
+            if (_isNavigationInProgress || NavigationService == null)
+                return;
+
+            _isNavigationInProgress = true;
+
+            // Анимация исчезновения текущей страницы
+            var exitAnimation = new DoubleAnimation
+            {
+                From = 1,
+                To = 0,
+                Duration = TimeSpan.FromSeconds(0.3),
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseIn }
+            };
+
+            this.BeginAnimation(OpacityProperty, exitAnimation);
+
+            await Task.Delay(300); // Ждем завершения анимации
+
+            // Переход на страницу MenuExercises с передачей имени пользователя
+            NavigationService.Navigate(new MenuExercises(username));
+
+            _isNavigationInProgress = false;
+        }
+
+
+        private void ShowErrorMessage(string message)
+        {
+            InfoLabel.Content = message;
+            InfoLabel.Visibility = Visibility.Visible;
+            // Установка стиля ошибки (красный текст)
+            InfoLabel.Foreground = new SolidColorBrush(Colors.Red);
+
+            // Автоматическое скрытие сообщения через 1 секунду
+            var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            timer.Tick += (sender, args) =>
+            {
+                InfoLabel.Visibility = Visibility.Collapsed;
+                timer.Stop();
+            };
+            timer.Start();
         }
     }
 }

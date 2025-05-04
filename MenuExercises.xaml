@@ -4,31 +4,234 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DualDolmen"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="700"
-      Title="MenuExercises">
+      Title="MenuExercises"
+      Background="#6FB8B7">
+
+    <Page.Resources>
+        <!-- Стиль для названия приложения -->
+        <Style x:Key="AppTitleStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#000000"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="50,0,0,0"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="10" 
+                                    ShadowDepth="3" 
+                                    Color="#FFFBE8" 
+                                    Opacity="0.7"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для кнопок меню -->
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="4"
+                                BorderBrush="#FFFBE8"
+                                BorderThickness="0 0 0 1">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="Center"
+                                            Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#4C8E8C"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="BorderBrush" Value="#FFFBE8"/>
+                    <Setter Property="BorderThickness" Value="0 0 0 2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Стиль для текстовых блоков -->
+        <Style x:Key="InfoTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FFFBE8"/>
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="Margin" Value="0,10"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="5" 
+                                    ShadowDepth="2" 
+                                    Color="#FFFBE8" 
+                                    Opacity="0.1"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для заголовка -->
+        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#000000"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="1" 
+                                    ShadowDepth="8" 
+                                    Color="#352fb1" 
+                                    Opacity="0.2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для метки удаления -->
+        <Style x:Key="DeleteLabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="#000000"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,50,0,0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="5" 
+                                    ShadowDepth="2" 
+                                    Color="#FFFBE8" 
+                                    Opacity="0.5"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Label">
+                        <TextBlock x:Name="textBlock" 
+                                   Text="{TemplateBinding Content}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   FontWeight="{TemplateBinding FontWeight}"
+                                   HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                   Margin="{TemplateBinding Margin}"
+                                   TextDecorations="{TemplateBinding Tag}"
+                                   Effect="{TemplateBinding Effect}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Tag" Value="Underline"/>
+                    <Setter Property="Effect">
+                        <Setter.Value>
+                            <DropShadowEffect BlurRadius="8" 
+                                            ShadowDepth="3" 
+                                            Color="#FFFBE8" 
+                                            Opacity="0.8"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Стиль для левой панели -->
+        <Style x:Key="LeftPanelStyle" TargetType="StackPanel">
+            <Setter Property="Background" Value="#5FA8A6"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="15" 
+                                    ShadowDepth="5" 
+                                    Color="#FFFBE8" 
+                                    Opacity="0.3"
+                                    Direction="270"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для правой панели -->
+        <Style x:Key="RightPanelStyle" TargetType="Border">
+            <Setter Property="Background" Value="#6FB8B7"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="15" 
+                                    ShadowDepth="5" 
+                                    Color="#FFFBE8" 
+                                    Opacity="0.3"
+                                    Direction="90"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
     <Grid>
-        <!-- Кнопка на весь экран -->
-        <Button Content="Привет"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Margin="0"
-                FontSize="36"
-                FontWeight="Bold"
-                Background="#000000"
-                Foreground="White"
-                BorderThickness="0"
-                Click="FullScreenButton_Click">
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}"
-                            CornerRadius="0">
-                        <ContentPresenter HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Название приложения -->
+        <TextBlock Text="Hello!" 
+                   Style="{StaticResource AppTitleStyle}"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Левая панель навигации -->
+            <StackPanel Grid.Column="0" Style="{StaticResource LeftPanelStyle}">
+                <Button Content="Мой аккаунт"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Margin="0,20,0,10"
+                        Click="AccountButton_Click"/>
+
+                <Button Content="Упражнения"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Margin="0,10"
+                        Click="ExercisesButton_Click"/>
+
+                <Button Content="Изученные слова"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Margin="0,10"
+                        Click="LearnedWordsButton_Click"/>
+
+                <Button Content="Выйти из аккаунта"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Margin="0,10"
+                        Click="LogoutButton_Click"/>
+
+                <Label Content="Удалить пользователя?"
+                       Style="{StaticResource DeleteLabelStyle}"
+                       MouseDown="DeleteLabel_MouseDown"/>
+            </StackPanel>
+
+            <!-- Правая часть с информацией -->
+            <Border x:Name="ContentBorder" Grid.Column="1" Style="{StaticResource RightPanelStyle}">
+                <StackPanel>
+                    <TextBlock Text="{Binding CurrentUsername}"
+                        Style="{StaticResource HeaderTextStyle}"/>
+
+                    <TextBlock Text="Уровней пройдено:"
+                               Style="{StaticResource InfoTextStyle}"/>
+
+                    <TextBlock Text="Точность ответов:"
+                               Style="{StaticResource InfoTextStyle}"/>
+
+                    <TextBlock Text="Времени в упражнениях:"
+                               Style="{StaticResource InfoTextStyle}"/>
+
+                    <TextBlock Text="Всего слов изучено:"
+                               Style="{StaticResource InfoTextStyle}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 </Page>

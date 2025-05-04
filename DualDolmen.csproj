@@ -9,11 +9,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UsersPasswords\**" />
+    <EmbeddedResource Remove="UsersPasswords\**" />
+    <None Remove="UsersPasswords\**" />
+    <Page Remove="UsersPasswords\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Images\books.png" />
     <None Remove="Images\London.jpg" />
     <None Remove="Images\London.png" />
     <None Remove="Images\palm.ico" />
     <None Remove="Images\stone.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>

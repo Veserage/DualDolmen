@@ -51,7 +51,7 @@
             </Setter>
         </Style>
 
-        <!-- Стиль для кнопки -->
+        <!-- Стиль для кнопки зарегистрироваться -->
         <Style x:Key="RoundButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#06657B"/>
             <Setter Property="Foreground" Value="White"/>
@@ -88,6 +88,7 @@
             <Setter Property="IsHitTestVisible" Value="False"/>
             <Setter Property="FontSize" Value="16"/>
         </Style>
+
     </Page.Resources>
 
     <Grid>
@@ -159,7 +160,7 @@
                     </Grid>
 
                     <!-- Поле для повторного ввода пароля -->
-                    <Grid Margin="-10,0,0,30" Height="50">
+                    <Grid Margin="-10,0,0,10" Height="50">
                         <PasswordBox x:Name="RepeatPasswordBox" 
                                      Style="{StaticResource PlaceholderPasswordBoxStyle}"
                                      GotFocus="RepeatPasswordBox_GotFocus"
@@ -170,7 +171,16 @@
                                    Style="{StaticResource PlaceholderTextStyle}"/>
                     </Grid>
 
-                    <!-- Кнопка регистрации -->
+                    <!-- Информационный Label -->
+                    <Label x:Name="InfoLabel"
+                        HorizontalContentAlignment="Center"
+                        Margin="0,5,0,0"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Foreground="#FF0000"
+                        Visibility="Collapsed"/>
+
+                        <!-- Кнопка регистрации -->
                     <Button Content="Зарегистрироваться"
                             Style="{StaticResource RoundButtonStyle}"
                             Height="60"

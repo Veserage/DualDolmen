@@ -128,7 +128,7 @@
                     </TextBlock>
 
                     <!-- Заголовок -->
-                    <TextBlock Text="Вход в систему"
+                    <TextBlock Text="Вход в приложение"
                                Margin="-10,30,0,30"
                                FontSize="32"
                                FontWeight="Bold"
@@ -147,7 +147,7 @@
                     </Grid>
 
                     <!-- Поле для пароля -->
-                    <Grid Margin="-10,0,0,30" Height="50">
+                    <Grid Margin="-10,0,0,10" Height="50">
                         <PasswordBox x:Name="PasswordBox" 
                                      Style="{StaticResource PlaceholderPasswordBoxStyle}"
                                      GotFocus="PasswordBox_GotFocus"
@@ -157,6 +157,14 @@
                                    FontSize="20"
                                    Style="{StaticResource PlaceholderTextStyle}"/>
                     </Grid>
+
+                    <Label x:Name="InfoLabel"
+                        HorizontalContentAlignment="Center"
+                        Margin="0,5,0,0"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Foreground="#FF0000"
+                        Visibility="Collapsed"/>
 
                     <!-- Кнопка входа -->
                     <Button Content="Войти"
