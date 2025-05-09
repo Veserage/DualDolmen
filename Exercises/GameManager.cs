@@ -37,9 +37,9 @@ namespace DualDolmen.Exercises
 
 		public bool HasMoreExercises => currentIndex < exercises.Count;
 
-		public void RegisterFailure() { /* сохраняешь ошибку */ }
+		public void RegisterFailure() { /* TODO: сохраняешь ошибку */ }
 
-		public void MarkLevelAsCompleted() { /* помечаешь уровень завершённым */ }
+		public void MarkLevelAsCompleted() { /* TODO: помечаешь уровень завершённым */ }
 	}
-
+	// TODO: Нужно сохранение прогресса, и отображение статы в ЛК, еще пройденные уровни красить зеленым в меню выбора уровней
 }

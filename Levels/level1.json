@@ -1,6 +1,21 @@
 ﻿{
 	"Exercises": [
 		{
+			"Type": "InsertWord",
+			"Content": {
+				"Text": "I ___ to the store yesterday.",
+				"Words": [ "go", "went", "gone" ],
+				"Answer": "went"
+			}
+		},
+		{
+			"Type": "OddOne",
+			"Content": {
+				"Words": [ "Apple", "Banana", "Chair", "Orange" ],
+				"Answer": "Chair"
+			}
+		},
+		{
 			"Type": "Cards",
 			"Content": [
 				{
@@ -16,19 +31,6 @@
 					"Match": "Дом"
 				}
 			]
-		},
-		{
-			"Type": "OddOne",
-			"Content": [ "Apple", "Banana", "Chair", "Orange" ],
-			"Answer" : "Chair"
-		},
-		{
-			"Type": "InsertWord",
-			"Content": {
-				"Text": "I ___ to the store yesterday.",
-				"Options": [ "go", "went", "gone" ],
-				"Answer": "went"
-			}
 		}
 	],
 	"CompletedWords": [

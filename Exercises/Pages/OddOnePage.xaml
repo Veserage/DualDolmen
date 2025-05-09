@@ -6,9 +6,27 @@
       xmlns:local="clr-namespace:DualDolmen.Exercises.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+	  Background="#6FB8B7"
       Title="OddOnePage">
 
-    <Grid>
-        
-    </Grid>
+	<Grid>
+		<Grid.RowDefinitions>
+			<!-- Под кнопку "Назад"-->
+			<RowDefinition Height="Auto"/>
+			
+			<RowDefinition Height="Auto"/>
+			
+			<RowDefinition/>
+			
+		</Grid.RowDefinitions>
+
+		<StackPanel HorizontalAlignment="Left" Grid.Row="0">
+			<Button Content="Выход" Width="100" FontSize="20" Margin="10"/>
+		</StackPanel>
+
+		<TextBlock Grid.Row="1" FontSize="20" Background="Snow" HorizontalAlignment="Center" Padding="8">Выберите лишнее:</TextBlock>
+
+		<!-- Wrap Panel со словами -->
+		<WrapPanel x:Name="WordsPanel" Grid.Row="2"  Margin="30" HorizontalAlignment="Center"/>
+	</Grid>
 </Page>

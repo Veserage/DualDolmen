@@ -5,10 +5,29 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DualDolmen.Exercises.Pages"
       mc:Ignorable="d" 
+	  Background="#6FB8B7"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="InsertWordPage">
 
-    <Grid>
-        
-    </Grid>
+	<Grid>
+		<Grid.RowDefinitions>
+			<!-- Под кнопку "Назад"-->
+			<RowDefinition Height="Auto"/>
+
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition/>
+			
+		</Grid.RowDefinitions>
+
+		<StackPanel HorizontalAlignment="Left" Grid.Row="0">
+			<Button Content="Выход" Width="100" FontSize="20" Margin="10"/>
+		</StackPanel>
+
+		<TextBlock Grid.Row="1" FontSize="20" Background="Snow" HorizontalAlignment="Center" Padding="12">Дополните предложение:</TextBlock>
+		<TextBlock Name="SentenceTextBlock" Margin="15" Padding="5" Background="Snow" Grid.Row="2" FontSize="20"/>
+
+		<!-- Wrap Panel со словами -->
+		<WrapPanel x:Name="WordsPanel" Grid.Row="3" Margin="30" HorizontalAlignment="Center"/>
+	</Grid>
 </Page>

@@ -12,14 +12,16 @@
     <Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/> <!-- Под кнопку "Назад"-->
-			<RowDefinition/> <!-- Под Uniform Grid-->
+			<RowDefinition Height="Auto"/>
+			<RowDefinition/>
 		</Grid.RowDefinitions>
 
 		<StackPanel HorizontalAlignment="Left" Grid.Row="0">
 			<Button Content="Выход" Width="100" FontSize="20" Margin="10"/>
 		</StackPanel>
+		<TextBlock Grid.Row="1" FontSize="20" Background="Snow" HorizontalAlignment="Center" Padding="8">Сопоставьте карточки:</TextBlock>
 		
 		<!-- Uniform Grid с карточками -->
-		<UniformGrid Grid.Row="1" x:Name="CardGrid" Rows="3" Columns="2" Margin="20" />
+		<UniformGrid Grid.Row="2" x:Name="CardGrid" Rows="3" Columns="2" Margin="20" />
 	</Grid>
 </Page>

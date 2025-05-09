@@ -9,7 +9,7 @@ namespace DualDolmen
             InitializeComponent();
             MainFrame.Navigate(new Authorization());
 
-            //
+            
         }
     }
 }
