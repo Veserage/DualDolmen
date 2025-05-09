@@ -1,0 +1,48 @@
+﻿{
+	"Exercises": [
+		{
+			"Type": "Cards",
+			"Content": [
+				{
+					"Term": "Dog",
+					"Match": "Собака"
+				},
+				{
+					"Term": "Cat",
+					"Match": "Кошка"
+				}
+			]
+		},
+		{
+			"Type": "OddOne",
+			"Content": [ "Apple", "Banana", "Chair", "Orange" ],
+			"Answer" : "Chair"
+		},
+		{
+			"Type": "InsertWord",
+			"Content": {
+				"Text": "I ___ to the store yesterday.",
+				"Options": [ "go", "went", "gone" ],
+				"Answer": "went"
+			}
+		}
+	],
+	"CompletedWords": [
+		{
+			"Content": "Dog",
+			"SpeechPart": "Noun"
+		},
+		{
+			"Content": "Apple",
+			"SpeechPart": "Noun"
+		},
+		{
+			"Content": "Went",
+			"SpeechPart": "Verb"
+		},
+		{
+			"Content": "Cat",
+			"SpeechPart": "Noun"
+		}
+	]
+}

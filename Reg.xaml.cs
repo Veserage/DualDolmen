@@ -23,7 +23,7 @@ namespace DualDolmen
 
             _usersApp = new UsersApp(usersFilePath);
         }
-        // TODO: заебошить enter
+        
 
         private void BackText_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -217,5 +217,10 @@ namespace DualDolmen
             };
             timer.Start();
         }
-    }
+
+		private void RegPage_PreviewKeyDown(object sender, KeyEventArgs e)
+		{
+            if (e.Key == Key.Enter) { RegisterButton_Click(sender, e); }
+		}
+	}
 }

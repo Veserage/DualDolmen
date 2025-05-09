@@ -219,15 +219,11 @@
                     <TextBlock Text="{Binding CurrentUsername}"
                         Style="{StaticResource HeaderTextStyle}"/>
 
-                    <TextBlock Text="Уровней пройдено:"
+					<TextBlock Text="Уровней пройдено:"
                                TextDecorations="Underline"
                                Style="{StaticResource InfoTextStyle}"/>
 
-                    <TextBlock Text="Точность ответов:"
-                               TextDecorations="Underline"
-                               Style="{StaticResource InfoTextStyle}"/>
-
-                    <TextBlock Text="Времени в упражнениях:"
+					<TextBlock Text="Времени в упражнениях:"
                                TextDecorations="Underline"
                                Style="{StaticResource InfoTextStyle}"/>
 

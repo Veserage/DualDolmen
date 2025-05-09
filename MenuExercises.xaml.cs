@@ -131,66 +131,36 @@ namespace DualDolmen
                     }
             };
 
-            // Словарь категорий и их уровней
-            var categories = new Dictionary<string, List<string>>
+			// Словарь уровней
+			var levels = new List<string>
             {
-                { "Общение", new List<string> { "Приветствие и прощание", "Знакомство", "Поздравление", "Обращение к человеку", "Встреча" } },
-                { "Городская черта", new List<string> { "Почта, телеграф", "Транспорт", "Внука", "В бассейне", "Развлечения" } },
-                { "Путешествия", new List<string> { "На самолёте", "На поезде", "На теплоходе", "На автобусе", "В такси" } },
-                { "Магазин, покупки", new List<string> { "В супермаркете", "На рынке", "Фрукты", "Овощи", "Ягоды" } },
-                { "Прибытие и отбытие", new List<string> { "Паспортный контроль", "Таможня", "На вокзале", "В аэропорту", "В отеле" } }
+	            { "Основы общения" },
+	            { "Мой мир" },
+	            { "Путешествия" },
+	            { "В магазине" },
+	            { "Хобби" }
             };
 
-            foreach (var category in categories)
-            {
-                var categoryContainer = new StackPanel { Orientation = Orientation.Vertical };
+			foreach (var level in levels)
+			{
+				var levelButton = new Button
+				{
+					Content = level,
+					Style = categoryButtonStyle, 
+				};
 
-                var categoryButton = new Button
-                {
-                    Content = category.Key,
-                    Style = categoryButtonStyle,
-                    Tag = category.Value
-                };
+				// Переход на уровень
+				levelButton.Click += (s, e) =>
+				{
+					// TODO: Обработка перехода на соответствующий уровень
+				};
 
-                var levelsPanel = new StackPanel
-                {
-                    Orientation = Orientation.Vertical,
-                    Visibility = Visibility.Collapsed,
-                    Margin = new Thickness(25, 0, 0, 10) // Увеличенный отступ
-                };
+				
+				mainPanel.Children.Add(levelButton);
+			}
 
-                for (int i = 0; i < category.Value.Count; i++)
-                {
-                    var levelButton = new Button
-                    {
-                        Content = $"Уровень {i + 1}. {category.Value[i]}",
-                        Style = levelButtonStyle,
-                        Tag = $"{category.Key}|{i + 1}"
-                    };
-
-                    levelButton.Click += (s, e) =>
-                    {
-                        var parts = ((string)levelButton.Tag).Split('|');
-                        MessageBox.Show($"Выбрана категория: {parts[0]}, Уровень: {parts[1]}");
-                    };
-
-                    levelsPanel.Children.Add(levelButton);
-                }
-
-                categoryButton.Click += (s, e) =>
-                {
-                    levelsPanel.Visibility = levelsPanel.Visibility == Visibility.Visible
-                        ? Visibility.Collapsed
-                        : Visibility.Visible;
-                };
-
-                categoryContainer.Children.Add(categoryButton);
-                categoryContainer.Children.Add(levelsPanel);
-                mainPanel.Children.Add(categoryContainer);
-            }
-
-            return scrollViewer;
-        }
+			return scrollViewer;
+		}
 
         // Изученные слова
         private UIElement GetLearnedWordsPanel() 
@@ -267,7 +237,7 @@ namespace DualDolmen
 
             var stayButton = new Button
             {
-                Content = "Нет, я хотел бы остаться",
+                Content = "Нет",
                 Background = Brushes.LightGray,
                 Foreground = buttonTextColor,
                 Padding = new Thickness(16, 8, 16, 8),

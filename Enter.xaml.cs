@@ -19,7 +19,6 @@ namespace DualDolmen
             InitializeComponent();
             LoadUsers();
         }
-        // TODO: заебошить enter
 
         private void LoadUsers()
         {
@@ -203,5 +202,10 @@ namespace DualDolmen
 
             exitStoryboard.Begin(this);
         }
-    }
+
+		private void EnterPage_PreviewKeyDown(object sender, KeyEventArgs e)
+		{
+            if (e.Key == Key.Enter) { LoginButton_Click(sender, e); }
+		}
+	}
 }
