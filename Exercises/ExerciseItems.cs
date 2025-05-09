@@ -17,7 +17,9 @@ namespace DualDolmen
 	public class Exercise
 	{
 		public string Type { get; set; } // Тип упражнения
-		public object Content { get; set; } // динамический, т.к. разный тип контента
+
+		[JsonPropertyName("Content")]
+		public JsonElement Content { get; set; } // динамический, т.к. разный тип контента
 	}
 
 	public class CompletedWord

@@ -20,7 +20,7 @@ namespace DualDolmen.Exercises.Pages
 	/// </summary>
 	public partial class InsertWordPage : Page
 	{
-		public InsertWordPage()
+		public InsertWordPage(Exercise exercise, GameManager gameManager)
 		{
 			InitializeComponent();
 		}

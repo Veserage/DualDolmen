@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using DualDolmen.Exercises;
+using System.Security.Cryptography.X509Certificates;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -152,7 +154,8 @@ namespace DualDolmen
 				// Переход на уровень
 				levelButton.Click += (s, e) =>
 				{
-					// TODO: Обработка перехода на соответствующий уровень
+                    GameManager gameManager = new GameManager(levels.IndexOf(level) + 1); // Названия уровней в Levels идут с 1, а не с нуля.
+					NavigationService.Navigate(gameManager.GetCurrentExercisePage());
 				};
 
 				

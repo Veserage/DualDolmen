@@ -20,7 +20,7 @@ namespace DualDolmen.Exercises.Pages
 	/// </summary>
 	public partial class OddOnePage : Page
 	{
-		public OddOnePage()
+		public OddOnePage(Exercise exercise, GameManager gameManager)
 		{
 			InitializeComponent();
 		}

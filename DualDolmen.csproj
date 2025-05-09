@@ -13,6 +13,9 @@
     <EmbeddedResource Remove="UsersPasswords\**" />
     <None Remove="UsersPasswords\**" />
     <Page Remove="UsersPasswords\**" />
+	  <Content Include="Levels\**\*.*">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
   </ItemGroup>
 
   <ItemGroup>
