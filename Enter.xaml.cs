@@ -12,6 +12,7 @@ namespace DualDolmen
     public partial class Enter : Page
     {
         private bool _isNavigationInProgress = false;
+        // Словарь никнейм-пароль
         private Dictionary<string, string> _users = new Dictionary<string, string>();
 
         public Enter()

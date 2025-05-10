@@ -126,6 +126,15 @@ namespace DualDolmen.Exercises.Pages
 		{
 			if (pairCount == totalPairCount)
 			{
+				// Если упражнений больше не осталось
+				if (!gameManager.HasMoreExercises)
+				{
+
+					gameManager.MarkLevelAsCompleted();
+					NavigationService.Navigate(new MenuExercises(gameManager.currentUsername));
+					return;
+				}
+
 				gameManager.AdvanceExercise();
 				NavigationService.Navigate(gameManager.GetCurrentExercisePage());
 			}
@@ -141,7 +150,10 @@ namespace DualDolmen.Exercises.Pages
 				(list[i], list[j]) = (list[j], list[i]);
 			}
 		}
+		// TODO: доделать во всех упражнениях кнопки "Выход" из упражнения
 	}
+
+	
 
 	public class CardItem
 	{

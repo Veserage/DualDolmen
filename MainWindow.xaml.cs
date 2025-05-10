@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 
 namespace DualDolmen
 {
@@ -7,6 +8,10 @@ namespace DualDolmen
         public MainWindow()
         {
             InitializeComponent();
+
+            // Создание папки с прогрессами пользователей
+            if (!Directory.Exists("UsersData")) { Directory.CreateDirectory("UsersData"); }
+
             MainFrame.Navigate(new Authorization());
 
             

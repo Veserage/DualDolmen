@@ -69,8 +69,17 @@ namespace DualDolmen.Exercises.Pages
 			if (btn.Content.ToString() == Answer)
 			{
 				btn.Background = Brushes.LightGreen;
-				await Task.Delay(1000);  
-				gameManager.AdvanceExercise();
+				await Task.Delay(1000);
+
+                // Если упражнений больше не осталось
+                if (!gameManager.HasMoreExercises)
+                {
+                    gameManager.MarkLevelAsCompleted();
+                    NavigationService.Navigate(new MenuExercises(gameManager.currentUsername));
+                    return;
+                }
+
+                gameManager.AdvanceExercise();
 				NavigationService.Navigate(gameManager.GetCurrentExercisePage());
 			}
 			else

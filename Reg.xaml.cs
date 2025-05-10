@@ -10,7 +10,7 @@ namespace DualDolmen
 {
     public partial class Reg : Page
     {
-        private readonly UsersApp _usersApp;
+        private readonly UserManager _UserManager;
         private bool _isNavigationInProgress = false;
 
         public Reg()
@@ -21,7 +21,7 @@ namespace DualDolmen
             string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string usersFilePath = Path.Combine(appDirectory, "users.json");
 
-            _usersApp = new UsersApp(usersFilePath);
+            _UserManager = new UserManager(usersFilePath);
         }
         
 
@@ -155,7 +155,7 @@ namespace DualDolmen
                 }
 
                 // Вызов метода регистрации
-                _usersApp.RegisterUser(login, password, repeatPassword);
+                _UserManager.RegisterUser(login, password, repeatPassword);
 
                 // Анимация перехода
                 await AnimateTransitionToMenuExercises(login);

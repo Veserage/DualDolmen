@@ -3,12 +3,13 @@ using Newtonsoft.Json;
 
 namespace DualDolmen
 {
-    public class UsersApp
+    // Класс-менеджер аккаунтов для входа/регистрации
+    public class UserManager
     {
         private readonly string _usersFilePath; // Путь к файлу с данными пользователей
         private Dictionary<string, string> _users = new Dictionary<string, string>(); // Словарь для хранения пользователей (логин-пароль)
 
-        public UsersApp(string usersFilePath)
+        public UserManager(string usersFilePath)
         {
             _usersFilePath = usersFilePath ?? throw new ArgumentNullException(nameof(usersFilePath)); // Проверка на null и инициализация пути к файлу
             LoadUsers(); // Загрузка пользователей при создании экземпляра класса
@@ -83,6 +84,7 @@ namespace DualDolmen
             if (_users.ContainsKey(username)) // Если пользователь существует
             {
                 _users.Remove(username);  // Удаление пользователя
+                // TODO: Нужно также удаление user_data в папке с инфой пользователей
                 SaveUsers(); // Сохранение изменений
                 return true;
             }
