@@ -69,6 +69,9 @@ namespace DualDolmen.Exercises.Pages
 				button.Click += Card_Click;
 				CardGrid.Children.Add(button);
 			}
+
+			// Обновление номера упражнения в левом верхнем углу
+			ProgressTextBlock.Text = $"{gameManager.currentExerciseIndex + 1}/{gameManager.exercises.Count}";
 		}
 
 		private void Card_Click(object sender, RoutedEventArgs e)
@@ -150,10 +153,15 @@ namespace DualDolmen.Exercises.Pages
 				(list[i], list[j]) = (list[j], list[i]);
 			}
 		}
-		// TODO: доделать во всех упражнениях кнопки "Выход" из упражнения
+
+		private void Exit_Click(object sender, RoutedEventArgs e)
+		{
+			NavigationService.Navigate(new MenuExercises(gameManager.currentUsername));
+		}
+		
 	}
 
-	
+
 
 	public class CardItem
 	{

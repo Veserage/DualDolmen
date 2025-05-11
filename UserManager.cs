@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Windows;
 using Newtonsoft.Json;
 
 namespace DualDolmen
@@ -28,7 +29,7 @@ namespace DualDolmen
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка загрузки пользователей: {ex.Message}");
+                MessageBox.Show($"Ошибка загрузки пользователей: {ex.Message}, файл повреждён либо пуст.");
                 _users = new Dictionary<string, string>();
             }
         }
@@ -42,7 +43,7 @@ namespace DualDolmen
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка сохранения пользователей: {ex.Message}");
+                MessageBox.Show($"Ошибка сохранения пользователей: {ex.Message}");
                 throw;
             }
         }
@@ -84,7 +85,13 @@ namespace DualDolmen
             if (_users.ContainsKey(username)) // Если пользователь существует
             {
                 _users.Remove(username);  // Удаление пользователя
-                // TODO: Нужно также удаление user_data в папке с инфой пользователей
+                
+                // Удаление данных о прогрессе пользователя из личного файла
+                if (File.Exists($"UsersData/{username}_data.json"))
+                {
+                    File.Delete($"UsersData/{username}_data.json");
+                }
+
                 SaveUsers(); // Сохранение изменений
                 return true;
             }

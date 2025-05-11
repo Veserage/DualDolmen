@@ -81,7 +81,7 @@
         <!-- Стиль для заголовка -->
         <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#000000"/>
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="25"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Margin" Value="0,0,0,20"/>
             <Setter Property="Effect">
@@ -195,15 +195,11 @@
 
                         Click="AccountButton_Click"/>
 
-                <Button Content="Упражнения"
+				<Button Content="Упражнения"
                         Style="{StaticResource MenuButtonStyle}"
                         Click="ExercisesButton_Click"/>
 
-                <Button Content="Изученные слова"
-                        Style="{StaticResource MenuButtonStyle}"
-                        Click="LearnedWordsButton_Click"/>
-
-                <Button Content="Выйти из аккаунта"
+				<Button Content="Выйти из аккаунта"
                         Style="{StaticResource MenuButtonStyle}"
                         Margin="0,0"
                         Click="LogoutButton_Click"/>
@@ -219,15 +215,15 @@
                     <TextBlock Text="{Binding CurrentUsername}"
                         Style="{StaticResource HeaderTextStyle}"/>
 
-					<TextBlock Text="Уровней пройдено:"
+					<TextBlock Text="Уровней пройдено: 0"
                                TextDecorations="Underline"
                                Style="{StaticResource InfoTextStyle}"/>
 
-					<TextBlock Text="Времени в упражнениях:"
+					<TextBlock Text="Времени в упражнениях: 00:00:00"
                                TextDecorations="Underline"
                                Style="{StaticResource InfoTextStyle}"/>
 
-                    <TextBlock Text="Всего слов изучено:"
+                    <TextBlock Text="Всего слов изучено: 0"
                                TextDecorations="Underline"
                                Style="{StaticResource InfoTextStyle}"/>
                 </StackPanel>

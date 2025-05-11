@@ -20,9 +20,10 @@
 			
 		</Grid.RowDefinitions>
 
-		<StackPanel HorizontalAlignment="Left" Grid.Row="0">
+		<WrapPanel HorizontalAlignment="Left" Grid.Row="0">
 			<Button Content="Выход" Width="100" FontSize="20" Margin="10"/>
-		</StackPanel>
+			<TextBlock Name="ProgressTextBlock" FontSize="20" Margin="10" Foreground="Black"/>
+		</WrapPanel>
 
 		<TextBlock Grid.Row="1" FontSize="20" Background="Snow" HorizontalAlignment="Center" Padding="8">Выберите лишнее:</TextBlock>
 

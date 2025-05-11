@@ -17,9 +17,9 @@ namespace DualDolmen
         {
             InitializeComponent();
 
-            // Путь к файлу users.json в папке bin
+            // Путь к файлу passwords.json в папке bin
             string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string usersFilePath = Path.Combine(appDirectory, "users.json");
+            string usersFilePath = Path.Combine(appDirectory, "passwords.json");
 
             _UserManager = new UserManager(usersFilePath);
         }

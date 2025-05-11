@@ -1,4 +1,5 @@
 ﻿{
+	"CompletedWordsCount": 33,
 	"Exercises": [
 		{
 			"Type": "InsertWord",
@@ -11,8 +12,40 @@
 		{
 			"Type": "OddOne",
 			"Content": {
+				"Words": [ "Car", "Bus", "Train", "Pizza" ],
+				"Answer": "Pizza"
+			}
+		},
+		{
+			"Type": "Cards",
+			"Content": [
+				{
+					"Term": "Water",
+					"Match": "Вода"
+				},
+				{
+					"Term": "Sun",
+					"Match": "Солнце"
+				},
+				{
+					"Term": "Book",
+					"Match": "Книга"
+				}
+			]
+		},  
+		{
+			"Type": "OddOne",
+			"Content": {
 				"Words": [ "Apple", "Banana", "Chair", "Orange" ],
 				"Answer": "Chair"
+			}
+		},
+		{
+			"Type": "InsertWord",
+			"Content": {
+				"Text": "She ___ a book every evening.",
+				"Words": [ "read", "reads", "reading" ],
+				"Answer": "reads"
 			}
 		},
 		{
@@ -31,26 +64,6 @@
 					"Match": "Дом"
 				}
 			]
-		}
-		
-
-	],
-	"CompletedWords": [
-		{
-			"Content": "Dog",
-			"SpeechPart": "Noun"
-		},
-		{
-			"Content": "Apple",
-			"SpeechPart": "Noun"
-		},
-		{
-			"Content": "Went",
-			"SpeechPart": "Verb"
-		},
-		{
-			"Content": "Cat",
-			"SpeechPart": "Noun"
 		}
 	]
 }

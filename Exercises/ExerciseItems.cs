@@ -11,7 +11,7 @@ namespace DualDolmen
 	public class LevelData
 	{
 		public List<Exercise> Exercises { get; set; } // Коллекция упражнений для уровня
-		public List<CompletedWord> CompletedWords { get; set; } // Основные слова для изучения, которые уровень предоставляет (добавляется в "Изученные слова")
+		public int CompletedWordsCount { get; set; } // Количество основных слов для изучения, которые уровень предоставляет
 	}
 
 	public class Exercise
@@ -33,14 +33,6 @@ namespace DualDolmen
 	{
 		public string Term { get; set; } // Слово на английском
 		public string Match { get; set; } // Перевод на русском
-	}
-
-	// Для InsertWord
-	public class InsertWordContent
-	{
-		public string Text { get; set; }
-		public List<string> Options { get; set; }
-		public string Answer { get; set; }
 	}
 
 }

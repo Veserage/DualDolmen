@@ -6,6 +6,7 @@ using System.Text.Json;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace DualDolmen.Exercises
 {
@@ -13,25 +14,29 @@ namespace DualDolmen.Exercises
 	{
 		public List<int> FinishedLevels { get; set; }
 		public string TimePassed { get; set; }
-		public int WordsLearned { get; set; }
+		public int WordsLearnedCount { get; set; }
 	}
 
 	public class GameManager
 	{
-		private List<Exercise> exercises;
-		private int currentExerciseIndex = 0; // Индекс упражнения в пределах уровня номер levelNumber
+		public List<Exercise> exercises;
+		public int currentExerciseIndex = 0; // Индекс упражнения в пределах уровня номер levelNumber
 		public string currentUsername;
 		private UserData userData;
-		private int levelNumber;
+		public int levelNumber;
+		private DateTime levelStartTime;
+		private int completedWordsCountForLevel = 0;
 
 		public GameManager(int levelNumber, string CurrentUsername)
 		{
 			this.levelNumber = levelNumber;
 
+			if (!File.Exists($"Levels/Level{levelNumber}.json")) { MessageBox.Show($"Ошибка - не найден файл Level{levelNumber}.json, загрузка уровня не возможна", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); Application.Current.Shutdown(); return; }
 			var jsonLevel = File.ReadAllText($"Levels/Level{levelNumber}.json");
 			var levelData = System.Text.Json.JsonSerializer.Deserialize<LevelData>(jsonLevel);
 			
 			exercises = levelData.Exercises;
+			completedWordsCountForLevel = levelData.CompletedWordsCount;
 
 			this.currentUsername = CurrentUsername;
 
@@ -47,11 +52,13 @@ namespace DualDolmen.Exercises
                 {
                     FinishedLevels = new List<int>(),
                     TimePassed = "",
-                    WordsLearned = 0
+                    WordsLearnedCount = 0
                 };
 				// Пока ничего в файл не сохраняем, ждём когда пользователь пройдёт УРОВЕНЬ
             }
-				
+
+			this.levelStartTime = DateTime.Now;
+
 		}
 
 		public Page GetCurrentExercisePage()
@@ -71,12 +78,32 @@ namespace DualDolmen.Exercises
 		public bool HasMoreExercises => currentExerciseIndex < exercises.Count - 1; // "- 1 потому, что начинаем индексацию упражнений с нуля"
 
 		// Сохранение прогресса в личный data.json пользователя
-		public void MarkLevelAsCompleted() {
-			userData.FinishedLevels.Add(levelNumber);
+		public void MarkLevelAsCompleted()
+		{
+			// Увеличиваем количество выученных слов
+			if (!userData.FinishedLevels.Contains(levelNumber)) { userData.WordsLearnedCount += completedWordsCountForLevel; }
+
 			
+
+				// Подсчёт времени
+			TimeSpan sessionDuration = DateTime.Now - levelStartTime;
+
+			TimeSpan totalTimePassed = TimeSpan.Zero;
+			if (TimeSpan.TryParse(userData.TimePassed, out var parsed))
+				totalTimePassed = parsed;
+
+			totalTimePassed += sessionDuration;
+			userData.TimePassed = totalTimePassed.ToString(@"hh\:mm\:ss");
+
+			// Добавление уровня в пройденные
+			if (!userData.FinishedLevels.Contains(levelNumber)) { userData.FinishedLevels.Add(levelNumber); }
+
+			// Сохраняем
 			string jsonUserData = JsonConvert.SerializeObject(userData, Formatting.Indented);
 			File.WriteAllText($"UsersData/{currentUsername}_data.json", jsonUserData);
 		}
+
+
 	}
-	// TODO: Нужно сохранение прогресса, и отображение статы в ЛК, еще пройденные уровни красить зеленым в меню выбора уровней
+
 }

@@ -16,9 +16,9 @@ namespace DualDolmen
     {
         // Активный пользователь
         public string CurrentUsername { get; set; }
-        public List<int> finishedLevels { get; set; }
+		private UserData userData;
 
-        public MenuExercises(string username)
+		public MenuExercises(string username)
         {
             InitializeComponent();
             CurrentUsername = username;
@@ -28,11 +28,26 @@ namespace DualDolmen
             if (File.Exists($"UsersData/{username}_data.json"))
             {
                 string jsonUserData = File.ReadAllText($"UsersData/{username}_data.json");
-                if (String.IsNullOrEmpty(jsonUserData)) { MessageBox.Show($"Ошибка, файл UsersData/{username}_data.json пуст"); return; }
-                
-                var userData = JsonConvert.DeserializeObject<UserData>(jsonUserData);
-                this.finishedLevels = userData.FinishedLevels; // Запоминаем индексы пройденных уровней
-            }
+                if (String.IsNullOrEmpty(jsonUserData)) {
+                    MessageBox.Show($"Ошибка, файл UsersData/{username}_data.json пуст", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+					Application.Current.Shutdown();
+                    return;
+				}
+
+                try
+                {
+					userData = JsonConvert.DeserializeObject<UserData>(jsonUserData);
+				}
+                catch
+                {
+					MessageBox.Show($"Файл UsersData/{username}_data.json повреждён или содержит некорректные данные.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+					Application.Current.Shutdown();
+					return;
+				}
+			}
+
+            // Обновление информации о пользователе на панели "Мой аккаунт"
+			ContentBorder.Child = GetAccountPanel();
         }
 
         private void AccountButton_Click(object sender, RoutedEventArgs e)
@@ -45,29 +60,55 @@ namespace DualDolmen
             ContentBorder.Child = GetExercisesPanel();
         }
 
-        private void LearnedWordsButton_Click(object sender, RoutedEventArgs e)
-        {
-            ContentBorder.Child = GetLearnedWordsPanel();
-        }
-
         private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
             ContentBorder.Child = GetLogoutConfirmationPanel();
         }
 
-        // Мой аккаунт
-        private UIElement GetAccountPanel() 
-        {
-            var panel = new StackPanel();
-            panel.Children.Add(new TextBlock { Text = $"{ CurrentUsername }", Style = (Style)FindResource("HeaderTextStyle") });
-            panel.Children.Add(new TextBlock { Text = "Уровней пройдено:", Style = (Style)FindResource("InfoTextStyle") });
-            panel.Children.Add(new TextBlock { Text = "Времени в упражнениях:", Style = (Style)FindResource("InfoTextStyle") });
-            panel.Children.Add(new TextBlock { Text = "Всего слов изучено:", Style = (Style)FindResource("InfoTextStyle") });
-            return panel;
-        }
+		// Мой аккаунт
+		private UIElement GetAccountPanel()
+		{
+			var panel = new StackPanel();
 
-        // Упражнения
-        private UIElement GetExercisesPanel() 
+            // Никнейм пользователя
+			var header = new TextBlock
+			{
+				Text = $"{CurrentUsername}",
+				Style = (Style)FindResource("HeaderTextStyle")
+			};
+
+			var levelsCompleted = new TextBlock
+			{
+				Text = $"Уровней пройдено: {userData?.FinishedLevels?.Count ?? 0}",
+				Style = (Style)FindResource("InfoTextStyle"),
+				TextDecorations = TextDecorations.Underline
+			};
+
+			var timeSpent = new TextBlock
+			{
+				Text = $"Времени в упражнениях: {userData?.TimePassed ?? "00:00:00"}",
+				Style = (Style)FindResource("InfoTextStyle"),
+				TextDecorations = TextDecorations.Underline
+			};
+
+			var wordsLearned = new TextBlock
+			{
+				Text = $"Всего слов изучено: {userData?.WordsLearnedCount ?? 0}",
+				Style = (Style)FindResource("InfoTextStyle"),
+                TextDecorations = TextDecorations.Underline
+			};
+
+			panel.Children.Add(header);
+			panel.Children.Add(levelsCompleted);
+			panel.Children.Add(timeSpent);
+			panel.Children.Add(wordsLearned);
+
+			return panel;
+		}
+
+
+		// Упражнения
+		private UIElement GetExercisesPanel() 
         {
             var scrollViewer = new ScrollViewer
             {
@@ -165,7 +206,7 @@ namespace DualDolmen
 
                 // Если уровень оказался в списке пройденных
                 
-                if (finishedLevels != null && finishedLevels.Contains( levels.IndexOf(level) + 1)) // +1 т.к. уровни с единицы, а индексы - с нуля
+                if (userData != null && userData.FinishedLevels.Contains( levels.IndexOf(level) + 1)) // +1 т.к. уровни с единицы, а индексы - с нуля
                 {
                     levelButton = new Button
                     {
@@ -196,48 +237,6 @@ namespace DualDolmen
 
 			return scrollViewer;
 		}
-
-        // Изученные слова
-        private UIElement GetLearnedWordsPanel() 
-        {
-            var panel = new StackPanel { Margin = new Thickness(0, -10, 0, 0) };
-
-            string[] categories = { "Существительные", "Глаголы", "Прилагательные", "Числительные", "Местоимения", "Наречия" };
-
-            foreach (var category in categories)
-            {
-                var textBlock = new TextBlock
-                {
-                    Text = $"> {category}",
-                    FontSize = 20,
-                    FontWeight = FontWeights.Bold,
-                    Foreground = Brushes.White,
-                    Margin = new Thickness(0, 30, 0, 0),
-                    TextDecorations = TextDecorations.Underline,
-                    Cursor = System.Windows.Input.Cursors.Hand // Курсор в виде руки при наведении
-                };
-                
-                // Добавляем тень
-                textBlock.Effect = new DropShadowEffect
-                {
-                    Color = Colors.Black,
-                    Direction = 315,
-                    ShadowDepth = 2,
-                    Opacity = 0.5,
-                    BlurRadius = 2
-                };
-
-                // Делаем TextBlock кликабельным
-                textBlock.MouseLeftButtonDown += (sender, e) =>
-                {
-                    //MessageBox.Show($"Вы выбрали категорию: {category}", "Категория", MessageBoxButton.OK, MessageBoxImage.Information);
-                };
-
-                panel.Children.Add(textBlock);
-            }
-
-            return panel;
-        }
 
         // Выход из аккаунта
         private UIElement GetLogoutConfirmationPanel() 
@@ -346,7 +345,7 @@ namespace DualDolmen
             {
                 try
                 {
-                    var UserManager = new UserManager("users.json");
+                    var UserManager = new UserManager("passwords.json");
 
                     bool isDeleted = UserManager.DeleteUser(CurrentUsername);
 

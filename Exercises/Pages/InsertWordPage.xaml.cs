@@ -59,6 +59,9 @@ namespace DualDolmen.Exercises.Pages
 				btn.Click += Word_Click;
 				WordsPanel.Children.Add(btn);
 			}
+
+			// Обновление номера упражнения в левом верхнем углу
+			ProgressTextBlock.Text = $"{gameManager.currentExerciseIndex + 1}/{gameManager.exercises.Count}";
 		}
 
 		private async void Word_Click(object sender, RoutedEventArgs e)
@@ -88,6 +91,11 @@ namespace DualDolmen.Exercises.Pages
 				await Task.Delay(1000);  
 				btn.Background = Brushes.Snow;  
 			}
+		}
+
+		private void Exit_Click(object sender, RoutedEventArgs e)
+		{
+			NavigationService.Navigate(new MenuExercises(gameManager.currentUsername));
 		}
 	}
 }
