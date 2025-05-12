@@ -1,0 +1,69 @@
+﻿{
+	"CompletedWordsCount": 19,
+	"Exercises": [
+		{
+			"Type": "InsertWord",
+			"Content": {
+				"Text": "He is a ___ driver.",
+				"Words": [ "careful", "quickly", "cold" ],
+				"Answer": "careful"
+			}
+		},
+		{
+			"Type": "InsertWord",
+			"Content": {
+				"Text": "We arrived ___ time.",
+				"Words": [ "on", "at", "in" ],
+				"Answer": "on"
+			}
+		},
+		{
+			"Type": "OddOne",
+			"Content": {
+				"Words": [ "Tiger", "Lion", "Elephant", "Car" ],
+				"Answer": "Car"
+			}
+		},
+		{
+			"Type": "OddOne",
+			"Content": {
+				"Words": [ "Run", "Sprint", "Jog", "Table" ],
+				"Answer": "Table"
+			}
+		},
+		{
+			"Type": "Cards",
+			"Content": [
+				{
+					"Term": "Mountain",
+					"Match": "Гора"
+				},
+				{
+					"Term": "River",
+					"Match": "Река"
+				},
+				{
+					"Term": "Forest",
+					"Match": "Лес"
+				}
+			]
+		},
+		{
+			"Type": "Cards",
+			"Content": [
+				{
+					"Term": "Island",
+					"Match": "Остров"
+				},
+				{
+					"Term": "Desert",
+					"Match": "Пустыня"
+				},
+				{
+					"Term": "Valley",
+					"Match": "Долина"
+				}
+			]
+		}
+	]
+}

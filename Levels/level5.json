@@ -1,0 +1,69 @@
+﻿{
+	"CompletedWordsCount": 20,
+	"Exercises": [
+		{
+			"Type": "InsertWord",
+			"Content": {
+				"Text": "The idea sounds ___ to me.",
+				"Words": [ "reasonable", "reason", "reasonably" ],
+				"Answer": "reasonable"
+			}
+		},
+		{
+			"Type": "InsertWord",
+			"Content": {
+				"Text": "He walked ___ the room like he owned it.",
+				"Words": [ "into", "onto", "over" ],
+				"Answer": "into"
+			}
+		},
+		{
+			"Type": "OddOne",
+			"Content": {
+				"Words": [ "Concept", "Theory", "Practice", "Tomato" ],
+				"Answer": "Tomato"
+			}
+		},
+		{
+			"Type": "OddOne",
+			"Content": {
+				"Words": [ "Economy", "Government", "Laptop", "Politics" ],
+				"Answer": "Laptop"
+			}
+		},
+		{
+			"Type": "Cards",
+			"Content": [
+				{
+					"Term": "Ambition",
+					"Match": "Амбиция"
+				},
+				{
+					"Term": "Courage",
+					"Match": "Смелость"
+				},
+				{
+					"Term": "Dedication",
+					"Match": "Преданность"
+				}
+			]
+		},
+		{
+			"Type": "Cards",
+			"Content": [
+				{
+					"Term": "Responsibility",
+					"Match": "Ответственность"
+				},
+				{
+					"Term": "Creativity",
+					"Match": "Креативность"
+				},
+				{
+					"Term": "Discipline",
+					"Match": "Дисциплина"
+				}
+			]
+		}
+	]
+}

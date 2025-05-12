@@ -17,13 +17,17 @@ namespace DualDolmen
         {
             InitializeComponent();
 
-            // Путь к файлу passwords.json в папке bin
-            string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string usersFilePath = Path.Combine(appDirectory, "passwords.json");
+            // Путь к файлу passwords.json в AppData
+            string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DualDolmen");
+            string usersFilePath = Path.Combine(appDataPath, "passwords.json");
 
-            _UserManager = new UserManager(usersFilePath);
+            // Убедимся, что директория существует
+            if (!Directory.Exists(appDataPath))
+                Directory.CreateDirectory(appDataPath);
+
+            _UserManager = new UserManager();
         }
-        
+
 
         private void BackText_MouseDown(object sender, MouseButtonEventArgs e)
         {

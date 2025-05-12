@@ -18,37 +18,58 @@ namespace DualDolmen
         public string CurrentUsername { get; set; }
 		private UserData userData;
 
-		public MenuExercises(string username)
+        public MenuExercises(string username)
         {
             InitializeComponent();
             CurrentUsername = username;
             DataContext = this;
 
-            // Если пользователь проходил уровни целиком, считаем их индексы
-            if (File.Exists($"UsersData/{username}_data.json"))
-            {
-                string jsonUserData = File.ReadAllText($"UsersData/{username}_data.json");
-                if (String.IsNullOrEmpty(jsonUserData)) {
-                    MessageBox.Show($"Ошибка, файл UsersData/{username}_data.json пуст", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-					Application.Current.Shutdown();
-                    return;
-				}
+            string jsonUserData = string.Empty;
 
-                try
+            try
+            {
+                // Формируем путь для файла в AppData
+                string userDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DualDolmen", "UsersData");
+                Directory.CreateDirectory(userDataFolder); // Создаём папку, если её нет
+
+                string userDataFile = Path.Combine(userDataFolder, $"{username}_data.json");
+
+                if (!File.Exists(userDataFile))
                 {
-					userData = JsonConvert.DeserializeObject<UserData>(jsonUserData);
-				}
-                catch
+                    // Если файл не существует, создаём новый
+                    userData = new UserData
+                    {
+                        FinishedLevels = new List<int>(),
+                        TimePassed = "00:00:00",
+                        WordsLearnedCount = 0
+                    };
+                    jsonUserData = JsonConvert.SerializeObject(userData, Formatting.Indented);
+                    File.WriteAllText(userDataFile, jsonUserData);
+                }
+                else
                 {
-					MessageBox.Show($"Файл UsersData/{username}_data.json повреждён или содержит некорректные данные.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-					Application.Current.Shutdown();
-					return;
-				}
-			}
+                    jsonUserData = File.ReadAllText(userDataFile);
+                    if (string.IsNullOrEmpty(jsonUserData))
+                    {
+                        MessageBox.Show($"Ошибка, файл {userDataFile} пуст", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Application.Current.Shutdown();
+                        return;
+                    }
+                    userData = JsonConvert.DeserializeObject<UserData>(jsonUserData);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown();
+                return;
+            }
 
             // Обновление информации о пользователе на панели "Мой аккаунт"
-			ContentBorder.Child = GetAccountPanel();
+            ContentBorder.Child = GetAccountPanel();
         }
+
 
         private void AccountButton_Click(object sender, RoutedEventArgs e)
         {
@@ -345,7 +366,7 @@ namespace DualDolmen
             {
                 try
                 {
-                    var UserManager = new UserManager("passwords.json");
+                    var UserManager = new UserManager();
 
                     bool isDeleted = UserManager.DeleteUser(CurrentUsername);
 

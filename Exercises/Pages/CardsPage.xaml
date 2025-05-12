@@ -17,7 +17,7 @@
 		</Grid.RowDefinitions>
 
 		<WrapPanel HorizontalAlignment="Left" Grid.Row="0">
-			<Button Content="Выход" Width="100" FontSize="20" Margin="10"/>
+			<Button Content="Выход" Width="100" FontSize="20" Margin="10" Click="Exit_Click"/>
 			<TextBlock Name="ProgressTextBlock" FontSize="20" Margin="10" Foreground="Black"/>
 		</WrapPanel>
 		<TextBlock Grid.Row="1" FontSize="20" Background="Snow" HorizontalAlignment="Center" Padding="8">Сопоставьте карточки:</TextBlock>

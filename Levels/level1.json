@@ -1,67 +1,67 @@
 ﻿{
-	"CompletedWordsCount": 33,
+	"CompletedWordsCount": 18,
 	"Exercises": [
 		{
 			"Type": "InsertWord",
 			"Content": {
-				"Text": "I ___ to the store yesterday.",
-				"Words": [ "go", "went", "gone" ],
-				"Answer": "went"
-			}
-		},
-		{
-			"Type": "OddOne",
-			"Content": {
-				"Words": [ "Car", "Bus", "Train", "Pizza" ],
-				"Answer": "Pizza"
-			}
-		},
-		{
-			"Type": "Cards",
-			"Content": [
-				{
-					"Term": "Water",
-					"Match": "Вода"
-				},
-				{
-					"Term": "Sun",
-					"Match": "Солнце"
-				},
-				{
-					"Term": "Book",
-					"Match": "Книга"
-				}
-			]
-		},  
-		{
-			"Type": "OddOne",
-			"Content": {
-				"Words": [ "Apple", "Banana", "Chair", "Orange" ],
-				"Answer": "Chair"
+				"Text": "It is a ___ day today.",
+				"Words": [ "sunny", "fast", "tall" ],
+				"Answer": "sunny"
 			}
 		},
 		{
 			"Type": "InsertWord",
 			"Content": {
-				"Text": "She ___ a book every evening.",
-				"Words": [ "read", "reads", "reading" ],
-				"Answer": "reads"
+				"Text": "The cat is ___ the box.",
+				"Words": [ "on", "in", "under" ],
+				"Answer": "in"
+			}
+		},
+		{
+			"Type": "OddOne",
+			"Content": {
+				"Words": [ "Dog", "Cat", "Apple", "Bird" ],
+				"Answer": "Apple"
+			}
+		},
+		{
+			"Type": "OddOne",
+			"Content": {
+				"Words": [ "Run", "Walk", "Chair", "Jump" ],
+				"Answer": "Chair"
 			}
 		},
 		{
 			"Type": "Cards",
 			"Content": [
 				{
-					"Term": "Dog",
-					"Match": "Собака"
+					"Term": "Red",
+					"Match": "Красный"
 				},
 				{
-					"Term": "Cat",
-					"Match": "Кошка"
+					"Term": "Blue",
+					"Match": "Синий"
 				},
 				{
-					"Term": "House",
-					"Match": "Дом"
+					"Term": "Green",
+					"Match": "Зелёный"
+				}
+			]
+		},
+		{
+			"Type": "Cards",
+			"Content": [
+				{
+					"Term": "One",
+					"Match": "Один"
+				},
+				{
+					"Term": "Two",
+					"Match": "Два"
+				},
+				{
+					"Term": "Three",
+					"Match": "Три"
 				}
 			]
 		}

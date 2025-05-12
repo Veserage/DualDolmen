@@ -25,8 +25,8 @@ namespace DualDolmen
         {
             try
             {
-                string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                string usersFilePath = Path.Combine(appDirectory, "passwords.json");
+                string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DualDolmen");
+                string usersFilePath = Path.Combine(appDataPath, "passwords.json");
 
                 if (File.Exists(usersFilePath))
                 {

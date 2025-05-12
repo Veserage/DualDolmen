@@ -1,0 +1,69 @@
+﻿{
+	"CompletedWordsCount": 20,
+	"Exercises": [
+		{
+			"Type": "InsertWord",
+			"Content": {
+				"Text": "She made a ___ decision.",
+				"Words": [ "wise", "white", "wonder" ],
+				"Answer": "wise"
+			}
+		},
+		{
+			"Type": "InsertWord",
+			"Content": {
+				"Text": "This bag is made ___ leather.",
+				"Words": [ "of", "from", "by" ],
+				"Answer": "of"
+			}
+		},
+		{
+			"Type": "OddOne",
+			"Content": {
+				"Words": [ "Joy", "Happiness", "Sadness", "Apple" ],
+				"Answer": "Apple"
+			}
+		},
+		{
+			"Type": "OddOne",
+			"Content": {
+				"Words": [ "Believe", "Think", "Know", "Table" ],
+				"Answer": "Table"
+			}
+		},
+		{
+			"Type": "Cards",
+			"Content": [
+				{
+					"Term": "Freedom",
+					"Match": "Свобода"
+				},
+				{
+					"Term": "Justice",
+					"Match": "Справедливость"
+				},
+				{
+					"Term": "Peace",
+					"Match": "Мир"
+				}
+			]
+		},
+		{
+			"Type": "Cards",
+			"Content": [
+				{
+					"Term": "Strength",
+					"Match": "Сила"
+				},
+				{
+					"Term": "Honor",
+					"Match": "Честь"
+				},
+				{
+					"Term": "Wisdom",
+					"Match": "Мудрость"
+				}
+			]
+		}
+	]
+}

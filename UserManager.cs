@@ -7,12 +7,16 @@ namespace DualDolmen
     // Класс-менеджер аккаунтов для входа/регистрации
     public class UserManager
     {
+        private readonly string _appDataPath; // Путь к папке AppData
         private readonly string _usersFilePath; // Путь к файлу с данными пользователей
         private Dictionary<string, string> _users = new Dictionary<string, string>(); // Словарь для хранения пользователей (логин-пароль)
 
-        public UserManager(string usersFilePath)
+        public UserManager()
         {
-            _usersFilePath = usersFilePath ?? throw new ArgumentNullException(nameof(usersFilePath)); // Проверка на null и инициализация пути к файлу
+            _appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DualDolmen");
+            Directory.CreateDirectory(_appDataPath); // Создание директории, если она не существует
+
+            _usersFilePath = Path.Combine(_appDataPath, "passwords.json"); // Путь к файлу passwords.json в AppData
             LoadUsers(); // Загрузка пользователей при создании экземпляра класса
         }
 
@@ -66,6 +70,9 @@ namespace DualDolmen
                 throw new InvalidOperationException("Пользователь с таким именем уже существует!");
 
             _users[username] = password ?? throw new ArgumentNullException(nameof(password)); // Добавление нового пользователя
+
+            // Создание файла с прогрессом пользователя в папке AppData
+
             SaveUsers();  // Сохранение изменений
         }
 
@@ -85,11 +92,12 @@ namespace DualDolmen
             if (_users.ContainsKey(username)) // Если пользователь существует
             {
                 _users.Remove(username);  // Удаление пользователя
-                
-                // Удаление данных о прогрессе пользователя из личного файла
-                if (File.Exists($"UsersData/{username}_data.json"))
+
+                // Удаление данных о прогрессе пользователя из личного файла в AppData
+                string userDataFile = Path.Combine(_appDataPath, "UsersData", $"{username}_data.json");
+                if (File.Exists(userDataFile))
                 {
-                    File.Delete($"UsersData/{username}_data.json");
+                    File.Delete(userDataFile);
                 }
 
                 SaveUsers(); // Сохранение изменений
@@ -97,7 +105,6 @@ namespace DualDolmen
             }
             return false;
         }
-
 
         public bool UserExists(string username) // Метод проверки существования пользователя
         {

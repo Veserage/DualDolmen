@@ -1,0 +1,69 @@
+﻿{
+	"CompletedWordsCount": 19,
+	"Exercises": [
+		{
+			"Type": "InsertWord",
+			"Content": {
+				"Text": "This book is very ___.",
+				"Words": [ "interesting", "early", "outside" ],
+				"Answer": "interesting"
+			}
+		},
+		{
+			"Type": "InsertWord",
+			"Content": {
+				"Text": "He sat ___ the window.",
+				"Words": [ "near", "before", "with" ],
+				"Answer": "near"
+			}
+		},
+		{
+			"Type": "OddOne",
+			"Content": {
+				"Words": [ "Shirt", "Pants", "Socks", "Window" ],
+				"Answer": "Window"
+			}
+		},
+		{
+			"Type": "OddOne",
+			"Content": {
+				"Words": [ "Monday", "Friday", "Yesterday", "Sunday" ],
+				"Answer": "Yesterday"
+			}
+		},
+		{
+			"Type": "Cards",
+			"Content": [
+				{
+					"Term": "Teacher",
+					"Match": "Учитель"
+				},
+				{
+					"Term": "Student",
+					"Match": "Ученик"
+				},
+				{
+					"Term": "Classroom",
+					"Match": "Класс"
+				}
+			]
+		},
+		{
+			"Type": "Cards",
+			"Content": [
+				{
+					"Term": "Board",
+					"Match": "Доска"
+				},
+				{
+					"Term": "Marker",
+					"Match": "Маркер"
+				},
+				{
+					"Term": "Eraser",
+					"Match": "Стиралка"
+				}
+			]
+		}
+	]
+}
