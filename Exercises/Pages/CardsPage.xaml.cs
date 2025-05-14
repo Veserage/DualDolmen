@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace DualDolmen.Exercises.Pages
@@ -26,6 +27,9 @@ namespace DualDolmen.Exercises.Pages
 
         private int totalPairCount = 0; // Количество пар всего
         private int pairCount = 0; // Количество пар выбрано
+
+        private bool _isExiting = false; // Флаг для блокировки повторных нажатий при выходе из упражнения
+        private bool _isProcessing = false; // Флаг для блокировки повторных нажатий при след. упражнении
 
         public CardsPage(Exercise exercise, GameManager gameManager)
         {
@@ -71,8 +75,10 @@ namespace DualDolmen.Exercises.Pages
             ProgressTextBlock.Text = $"{gameManager.currentExerciseIndex + 1}/{gameManager.exercises.Count}";
         }
 
-        private void Card_Click(object sender, RoutedEventArgs e)
+        private async void Card_Click(object sender, RoutedEventArgs e)
         {
+            if (_isProcessing) return; // Блокировка кликов при завершении
+
             var button = sender as Button;
             var card = (CardItem)button.Tag;
 
@@ -84,12 +90,21 @@ namespace DualDolmen.Exercises.Pages
             }
             else if (button != firstSelectedCard)
             {
-                // Второй клик
+                _isProcessing = true; // блокируем до завершения текущей пары
+
+                // Подсветка второго выбора
+                button.Background = Brushes.LightBlue;
+
+                // Подождём немного, чтобы пользователь увидел выбор
+                await Task.Delay(250);
+
                 if (firstSelectedItem.PairId == card.PairId)
                 {
                     // Совпадение
                     button.Background = Brushes.LightGreen;
                     firstSelectedCard.Background = Brushes.LightGreen;
+
+                    await Task.Delay(250); // небольшая задержка перед скрытием
 
                     button.Visibility = Visibility.Hidden;
                     firstSelectedCard.Visibility = Visibility.Hidden;
@@ -97,45 +112,91 @@ namespace DualDolmen.Exercises.Pages
                 }
                 else
                 {
-                    // Ошибка
+                    // Ошибка — показываем красный после небольшой паузы
                     button.Background = Brushes.IndianRed;
                     firstSelectedCard.Background = Brushes.IndianRed;
-                    //gameManager.RegisterFailure(gameManager.CurrentExerciseIndex);
+
+                    await Task.Delay(500); // время показа ошибки
+
+                    button.Background = Brushes.White;
+                    firstSelectedCard.Background = Brushes.White;
                 }
 
-                // Очистка выбора
-                Task.Delay(500).ContinueWith(_ =>
-                {
-                    Dispatcher.Invoke(() =>
-                    {
-                        button.Background = Brushes.White;
+                // Очистка
+                firstSelectedCard = null;
+                firstSelectedItem = null;
 
-                        if (firstSelectedCard != null)
-                            firstSelectedCard.Background = Brushes.White; // Card - это на самом деле Button
+                _isProcessing = false;
 
-                        firstSelectedCard = null;
-                        firstSelectedItem = null;
-
-                        CheckIfCompleted();
-                    });
-                });
+                // Только здесь вызываем проверку, чтобы исключить ранний переход
+                CheckIfCompleted();
             }
         }
 
-        private void CheckIfCompleted()
+        // Переход на страницу MenuExercises в случае, если все упражнения кончились на уровне
+        private async void CheckIfCompleted()
         {
+            if (_isProcessing) return;
+
             if (pairCount == totalPairCount)
             {
-                // Если упражнений больше не осталось
+                _isProcessing = true;
+
                 if (!gameManager.HasMoreExercises)
                 {
                     gameManager.MarkLevelAsCompleted();
-                    NavigationService.Navigate(new MenuExercises(gameManager.currentUsername));
-                    return;
-                }
 
-                gameManager.AdvanceExercise();
-                NavigationService.Navigate(gameManager.GetCurrentExercisePage());
+                    // Плавное затухание перед переходом на MenuExercises
+                    var fadeOut = new DoubleAnimation
+                    {
+                        From = 1.0,
+                        To = 0.0,
+                        Duration = TimeSpan.FromSeconds(0.5),
+                        EasingFunction = new CubicEase { EasingMode = EasingMode.EaseIn }
+                    };
+
+                    this.BeginAnimation(OpacityProperty, fadeOut);
+                    await Task.Delay(500);
+
+                    var newPage = new MenuExercises(gameManager.currentUsername);
+                    newPage.Opacity = 0;
+                    NavigationService.Navigate(newPage);
+
+                    var fadeIn = new DoubleAnimation
+                    {
+                        From = 0.0,
+                        To = 1.0,
+                        Duration = TimeSpan.FromSeconds(0.5),
+                    };
+                    newPage.BeginAnimation(OpacityProperty, fadeIn);
+                }
+                else
+                {
+                    gameManager.AdvanceExercise();
+
+                    var fadeOut = new DoubleAnimation
+                    {
+                        From = 1.0,
+                        To = 0.0,
+                        Duration = TimeSpan.FromSeconds(0.5),
+                        EasingFunction = new CubicEase { EasingMode = EasingMode.EaseIn }
+                    };
+
+                    this.BeginAnimation(OpacityProperty, fadeOut);
+                    await Task.Delay(500);
+
+                    var nextPage = gameManager.GetCurrentExercisePage();
+                    nextPage.Opacity = 0;
+                    NavigationService.Navigate(nextPage);
+
+                    var fadeIn = new DoubleAnimation
+                    {
+                        From = 0.0,
+                        To = 1.0,
+                        Duration = TimeSpan.FromSeconds(0.5),
+                    };
+                    nextPage.BeginAnimation(OpacityProperty, fadeIn);
+                }
             }
         }
 
@@ -150,39 +211,68 @@ namespace DualDolmen.Exercises.Pages
             }
         }
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
+        private async void Exit_Click(object sender, RoutedEventArgs e)
         {
-            // Подсчёт времени
-            TimeSpan sessionDuration = DateTime.Now - gameManager.levelStartTime;
+            // Если уже выходим - игнорируем повторное нажатие
+            if (_isExiting) return;
 
-            TimeSpan totalTimePassed = TimeSpan.Zero; // по умолчанию прошло 0 секунд
-            if (TimeSpan.TryParse(gameManager.userData.TimePassed, out var parsed)) // Если не 0, то столько, сколько в файле прогресса пользователя
-                totalTimePassed = parsed;
+            _isExiting = true; // Устанавливаем флаг
 
-            // Обновляем время в gameManager
-            totalTimePassed += sessionDuration;
-            gameManager.userData.TimePassed = totalTimePassed.ToString(@"hh\:mm\:ss");
-
-            // Определяем путь к AppData для текущего пользователя
-            string appDataPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "DualDolmen",
-                "UsersData"
-            );
-
-            // Создаём директорию, если её нет
-            if (!Directory.Exists(appDataPath))
+            try
             {
-                Directory.CreateDirectory(appDataPath);
+                // Плавное затемнение текущей страницы
+                var fadeOut = new DoubleAnimation
+                {
+                    From = 1.0,
+                    To = 0.0,
+                    Duration = TimeSpan.FromSeconds(0.5),
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                };
+
+                this.BeginAnimation(OpacityProperty, fadeOut);
+                await Task.Delay(500); // Ждём завершения анимации
+
+                // Подсчёт времени
+                TimeSpan sessionDuration = DateTime.Now - gameManager.levelStartTime;
+
+                TimeSpan totalTimePassed = TimeSpan.Zero;
+                if (TimeSpan.TryParse(gameManager.userData.TimePassed, out var parsed))
+                    totalTimePassed = parsed;
+
+                // Обновляем время
+                totalTimePassed += sessionDuration;
+                gameManager.userData.TimePassed = totalTimePassed.ToString(@"hh\:mm\:ss");
+
+                // Сохранение данных
+                string appDataPath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "DualDolmen",
+                    "UsersData"
+                );
+
+                Directory.CreateDirectory(appDataPath); // Создаём директорию если её нет
+
+                string userFilePath = Path.Combine(appDataPath, $"{gameManager.currentUsername}_data.json");
+                string newTimeUserData = JsonConvert.SerializeObject(gameManager.userData, Formatting.Indented);
+                await File.WriteAllTextAsync(userFilePath, newTimeUserData);
+
+                // Плавное появление новой страницы
+                var newPage = new MenuExercises(gameManager.currentUsername);
+                newPage.Opacity = 0;
+                NavigationService.Navigate(newPage);
+
+                var fadeIn = new DoubleAnimation
+                {
+                    From = 0.0,
+                    To = 1.0,
+                    Duration = TimeSpan.FromSeconds(0.5),
+                };
+                newPage.BeginAnimation(OpacityProperty, fadeIn);
             }
-
-            // Сохраняем userdata с новым временем в файл в AppData
-            string newTimeUserData = JsonConvert.SerializeObject(gameManager.userData, Formatting.Indented);
-            string userFilePath = Path.Combine(appDataPath, $"{gameManager.currentUsername}_data.json");
-            File.WriteAllText(userFilePath, newTimeUserData);
-
-            // Переход к меню
-            NavigationService.Navigate(new MenuExercises(gameManager.currentUsername));
+            finally
+            {
+                _isExiting = false; // Сбрасываем флаг даже в случае ошибки
+            }
         }
 
         // Загрузка данных пользователя из AppData

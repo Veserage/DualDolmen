@@ -110,5 +110,14 @@ namespace DualDolmen
         {
             return username != null && _users.ContainsKey(username); // Проверка на null и существование в словаре
         }
+
+        public string? GetPassword(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+                return null;
+
+            return _users.TryGetValue(username, out var password) ? password : null;
+        }
+
     }
 }

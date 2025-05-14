@@ -65,7 +65,7 @@
         <!-- Стиль для текстовых блоков -->
         <Style x:Key="InfoTextStyle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="#FFFBE8"/>
-            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontSize" Value="28"/>
             <Setter Property="Margin" Value="0,10"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="Effect">
@@ -100,7 +100,7 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0,200,0,0"/>
+            <Setter Property="Margin" Value="0,175,0,0"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Effect">
@@ -195,11 +195,15 @@
 
                         Click="AccountButton_Click"/>
 
-				<Button Content="Упражнения"
+                <Button Content="Упражнения"
                         Style="{StaticResource MenuButtonStyle}"
                         Click="ExercisesButton_Click"/>
 
-				<Button Content="Выйти из аккаунта"
+                <Button Content="Генерация отчёта"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Click="GenerateReportButton_Click"/>
+
+                <Button Content="Выйти из аккаунта"
                         Style="{StaticResource MenuButtonStyle}"
                         Margin="0,0"
                         Click="LogoutButton_Click"/>
