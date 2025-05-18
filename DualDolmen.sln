@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DualDolmen", "DualDolmen.csproj", "{26407B2B-D682-4497-9A45-A65076955ECF}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DualDolmenSetup", "DualDolmenSetup\DualDolmenSetup.vdproj", "{38276E83-E8F4-0338-95F8-28584CBF759C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{26407B2B-D682-4497-9A45-A65076955ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26407B2B-D682-4497-9A45-A65076955ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26407B2B-D682-4497-9A45-A65076955ECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38276E83-E8F4-0338-95F8-28584CBF759C}.Debug|Any CPU.ActiveCfg = Debug
+		{38276E83-E8F4-0338-95F8-28584CBF759C}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
