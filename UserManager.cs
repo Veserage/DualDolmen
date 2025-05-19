@@ -118,6 +118,5 @@ namespace DualDolmen
 
             return _users.TryGetValue(username, out var password) ? password : null;
         }
-
     }
 }

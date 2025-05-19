@@ -78,7 +78,6 @@ namespace DualDolmen
             ContentBorder.Child = GetAccountPanel();
         }
 
-
         private void AccountButton_Click(object sender, RoutedEventArgs e)
         {
             ContentBorder.Child = GetAccountPanel();

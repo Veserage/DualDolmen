@@ -28,7 +28,6 @@ namespace DualDolmen
             _UserManager = new UserManager();
         }
 
-
         private void BackText_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (_isNavigationInProgress || NavigationService == null)
@@ -203,7 +202,6 @@ namespace DualDolmen
 
             _isNavigationInProgress = false;
         }
-
 
         private void ShowErrorMessage(string message)
         {

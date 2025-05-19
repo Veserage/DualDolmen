@@ -303,7 +303,7 @@ namespace DualDolmen.Exercises.Pages
 
     public class CardItem
     {
-        public string Text { get; set; }
-        public string PairId { get; set; } // идентификатор пары
+        public required string Text { get; set; }
+        public required string PairId { get; set; } // идентификатор пары
     }
 }

@@ -19,6 +19,7 @@ namespace DualDolmen
     public partial class Authorization : Page
     {
         private bool _isNavigationInProgress = false; // Флаг для блокировки множественных нажатий
+
         public Authorization()
         {
             InitializeComponent();
